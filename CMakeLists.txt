@@ -25,6 +25,9 @@ set(PROJECT_SOURCES
         driverwindow.h
         driverwindow.ui
         ${TS_FILES}
+        ExponentialMovingAverage.cpp
+        ExponentialMovingAverage.h
+        ExponentialMovingAverage.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
