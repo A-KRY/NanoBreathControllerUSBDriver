@@ -7,20 +7,41 @@
 
 class ExponentialMovingAverage {
 private:
+    /**
+     * @brief   <p>EMA 滤波器的 alpha 参数</p>
+     * <p>The alpha parameter of EMA.</p>
+     * @author  A-KRY
+     * @date    2023/10/22 19:34
+     */
     double alpha;
-    double ema;
-    bool initialized;
-public:
-    explicit ExponentialMovingAverage(double alpha = 1.0, double ema = 0.0, bool initialized = true);
 
     /**
-     * @brief   <p>设置 EMA 的 alpha 值</p>
-     * <p>Set the alpha of EMA.</p>
-     * @param   alpha a parameter of EMA
+     * @brief   <p>指示 EMA 是否刚刚初始化或被重置</p>
+     * <p>Shows if the EMA is initialized or reset.</p>
+     * @author  A-KRY
+     * @date    2023/10/22 19:36
+     */
+    bool isReset;
+
+    /**
+     * @brief   <p>最新的 EMA 值</p>
+     * <p>The latest EMA value.</p>
+     * @author  A-KRY
+     * @date    2023/10/22 19:35
+     */
+    double ema;
+
+public:
+    explicit ExponentialMovingAverage(double alpha = 1.0, double ema = 0.0, bool isReset = true);
+
+    /**
+     * @brief   <p>设置 EMA 的 newAlpha 值</p>
+     * <p>Set the newAlpha of EMA.</p>
+     * @param   newAlpha a parameter of EMA
      * @author  A-KRY
      * @date    2023/10/22 19:28
      */
-    void setAlpha(double alpha);
+    void setAlpha(double newAlpha);
 
     /**
      * @brief   <p>过滤输入值</p>

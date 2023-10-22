@@ -4,21 +4,21 @@
 
 #include "ExponentialMovingAverage.h"
 
-ExponentialMovingAverage::ExponentialMovingAverage(double alpha, double ema, bool initialized) :
-    alpha(alpha)
+ExponentialMovingAverage::ExponentialMovingAverage(double alpha, double ema, bool isReset) :
+        alpha(alpha)
     , ema(ema)
-    , initialized(initialized)
+    , isReset(isReset)
 {
 
 }
 
-void ExponentialMovingAverage::setAlpha(double alpha) {
-    ExponentialMovingAverage::alpha = alpha;
+void ExponentialMovingAverage::setAlpha(double newAlpha) {
+    ExponentialMovingAverage::alpha = newAlpha;
 }
 
 double ExponentialMovingAverage::filter(double rawValue) {
-    if (!initialized) {
-        initialized = true;
+    if (isReset) {
+        isReset = false;
         ema = rawValue;
     }
     else {
@@ -28,12 +28,10 @@ double ExponentialMovingAverage::filter(double rawValue) {
 }
 
 void ExponentialMovingAverage::reset() {
-    ema = 0.0;
-    initialized = true;
+    isReset = true;
 }
 
 void ExponentialMovingAverage::resetAll() {
     alpha = 1.0;
-    ema = 0.0;
-    initialized = true;
+    isReset = true;
 }

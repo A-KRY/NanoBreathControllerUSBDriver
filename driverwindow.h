@@ -33,8 +33,20 @@ class DriverWindow : public QWidget
      */
     QTimer* usbPortUpdateTimer;
 
+    /**
+     * @brief   <p>发送的 CC 值的 MIDI 通道</p>
+     * <p>The MIDI channel about to send CC value to.</p>
+     * @author  A-KRY
+     * @date    2023/10/22 19:31
+     */
     BYTE currentMidiChannel;
 
+    /**
+     * @brief   <p>与 Arduino Nano 通信的串口</p>
+     * <p>The serial port which Arduino Nano communicate with.</p>
+     * @author  A-KRY
+     * @date    2023/10/22 19:33
+     */
     QSerialPort* currentSerialPort;
 
 public:
