@@ -8,6 +8,7 @@
 #include <QSerialPort>
 #include <QMessageBox>
 #include <iostream>
+#include "ExponentialMovingAverage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DriverWindow; }
@@ -39,7 +40,7 @@ class DriverWindow : public QWidget
      * @author  A-KRY
      * @date    2023/10/22 19:31
      */
-    BYTE currentMidiChannel;
+    BYTE midiChannel;
 
     /**
      * @brief   <p>与 Arduino Nano 通信的串口</p>
@@ -47,7 +48,15 @@ class DriverWindow : public QWidget
      * @author  A-KRY
      * @date    2023/10/22 19:33
      */
-    QSerialPort* currentSerialPort;
+    QSerialPort* serialPort;
+
+    /**
+     * @brief   <p>指数移动平均滤波器</p>
+     * <p>EMA Filter</p>
+     * @author  A-KRY
+     * @date    2023/10/23 9:05
+     */
+    std::unique_ptr<ExponentialMovingAverage> EMA;
 
 public:
     explicit DriverWindow(QWidget *parent = nullptr);
@@ -79,6 +88,14 @@ private:
       * @date    2023/10/22 14:52
       */
       void midiChannelComboBox_onActivated(int index);
+
+      /**
+       * @brief   <p>serialPort接收数据回调</p>
+       * <p>serialPort data receive callback</p>
+       * @author  A-KRY
+       * @date    2023/10/23 8:44
+       */
+      void serialPort_onDataReceived();
 
 protected:
 };

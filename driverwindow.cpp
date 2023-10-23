@@ -10,8 +10,9 @@ DriverWindow::DriverWindow(QWidget *parent)
     , ui(new Ui::DriverWindow)
     , midiPort(virtualMIDICreatePortEx2(L"Nano Breath Controller", nullptr, 0, MAX_SYSEX_BUFFER, TE_VM_FLAGS_INSTANTIATE_BOTH))
     , usbPortUpdateTimer(new QTimer(this))
-    , currentMidiChannel(0)
-    , currentSerialPort(new QSerialPort())
+    , midiChannel(0)
+    , serialPort(new QSerialPort())
+    , EMA(new ExponentialMovingAverage(0.5))
 {
     ui->setupUi(this);
 
@@ -37,6 +38,10 @@ DriverWindow::DriverWindow(QWidget *parent)
     // midiChannelComboBox 回调函数
     connect(ui->midiChannelComboBox, &QComboBox::activated,
             this, &DriverWindow::midiChannelComboBox_onActivated);
+
+    // serialPort 回调函数
+    // serialPort callbacks
+    connect(serialPort, &QSerialPort::readyRead, this, &DriverWindow::serialPort_onDataReceived);
 }
 
 DriverWindow::~DriverWindow()
@@ -44,25 +49,35 @@ DriverWindow::~DriverWindow()
     if (midiPort) {
         virtualMIDIClosePort(midiPort);
     }
-    if (currentSerialPort->isOpen()) {
-        currentSerialPort->close();
+    if (serialPort->isOpen()) {
+        serialPort->close();
     }
     delete ui;
+}
+
+void DriverWindow::serialPort_onDataReceived() {
+    auto data = serialPort->read(1);
+    if (!data.isEmpty()) {
+        BYTE midiMessage[3] = {static_cast<BYTE>(0xB0|midiChannel), 11, static_cast<BYTE>(EMA->filter(data[0]))};
+        if (midiPort) {
+            virtualMIDISendData(midiPort, midiMessage, sizeof(midiMessage));
+        }
+    }
 }
 
 void DriverWindow::availableUsbPortComboBox_onActivated(int index) {
     // If port not changed, do nothing and return
     // 如果串口未变，直接返回
-    if (currentSerialPort->portName() == ui->availableUsbPortComboBox->currentText()) {
+    if (serialPort->portName() == ui->availableUsbPortComboBox->currentText()) {
         return;
     }
 
     // Close serial port if it's opened
     // 若串口已打开，则关闭
-    if (currentSerialPort->portName() != ui->availableUsbPortComboBox->currentText()) {
-        if (currentSerialPort->isOpen()) {
-            currentSerialPort->close();
-            currentSerialPort->setPortName(DEFAULT_PORT_NAME);
+    if (serialPort->portName() != ui->availableUsbPortComboBox->currentText()) {
+        if (serialPort->isOpen()) {
+            serialPort->close();
+            serialPort->setPortName(DEFAULT_PORT_NAME);
         }
     }
 
@@ -71,22 +86,22 @@ void DriverWindow::availableUsbPortComboBox_onActivated(int index) {
     if (index != 0) {
         // Set port name and open port
         // 设置端口名并打开端口
-        currentSerialPort->setPortName(ui->availableUsbPortComboBox->currentText());
+        serialPort->setPortName(ui->availableUsbPortComboBox->currentText());
 
-        if (currentSerialPort->open(QIODevice::ReadWrite)) {
-            currentSerialPort->setBaudRate(QSerialPort::Baud2400);
+        if (serialPort->open(QIODevice::ReadWrite)) {
+            serialPort->setBaudRate(QSerialPort::Baud2400);
             return;
         }
         else {
             QMessageBox::information(this, "Error", "串口打开失败", QMessageBox::Ok);
             ui->availableUsbPortComboBox->setCurrentIndex(0);
-            currentSerialPort->setPortName(DEFAULT_PORT_NAME);
+            serialPort->setPortName(DEFAULT_PORT_NAME);
         }
     }
 }
 
 void DriverWindow::midiChannelComboBox_onActivated(int index) {
-    currentMidiChannel = index;
+    midiChannel = index;
 }
 
 void DriverWindow::updateAvailableUsbPort() {
