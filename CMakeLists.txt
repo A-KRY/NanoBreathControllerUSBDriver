@@ -28,6 +28,9 @@ set(PROJECT_SOURCES
         ExponentialMovingAverage.cpp
         ExponentialMovingAverage.h
         ExponentialMovingAverage.h
+        SliderEventFilter.cpp
+        SliderEventFilter.h
+        SliderEventFilter.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

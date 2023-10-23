@@ -7,7 +7,9 @@
 #include <QTimer>
 #include <QSerialPort>
 #include <QMessageBox>
-#include <iostream>
+#include <QFile>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include "ExponentialMovingAverage.h"
 
 QT_BEGIN_NAMESPACE
@@ -66,20 +68,36 @@ private:
     Ui::DriverWindow *ui;
 
     /**
-     * @brief   <p>更新 availableUsbPortComboBox 的选项</p>
-     * <p> Update items in availableUsbPortComboBox</p>
+     * @brief   <p>保存参数到 JSON</p>
+     * <p>Save params to JSON</p>
+     * @author  A-KRY
+     * @date    2023/10/23 10:53
+     */
+     void saveToJson();
+
+     /**
+      * @brief   <p>从 JSON 读取参数</p>
+      * <p>Load params from JSON</p>
+      * @author  A-KRY
+      * @date    2023/10/23 10:54
+      */
+    void loadFromJson();
+
+    /**
+     * @brief   <p>更新 usbPortComboBox 的选项</p>
+     * <p> Update items in usbPortComboBox</p>
      * @author  A-KRY
      * @date    2023/10/21 17:36
      */
     void updateAvailableUsbPort();
     
     /**
-     * @brief   <p>availableUsbPortComboBox 选中项变更的回调函数</p>
-     * <p>availableUsbPortComboBox current index changed callback.</p>
+     * @brief   <p>usbPortComboBox 选中项变更的回调函数</p>
+     * <p>usbPortComboBox current index changed callback.</p>
      * @author  A-KRY
      * @date    2023/10/22 14:48
      */
-     void availableUsbPortComboBox_onActivated(int index);
+     void usbPortComboBox_onActivated(int index);
      
      /**
       * @brief   <p>midiChannelComboBox 选中项变更的回调函数</p>
@@ -104,7 +122,7 @@ private:
        * @author  A-KRY
        * @date    2023/10/23 9:46
        */
-      double smoothnessHorizontalSlider_onValueChanged(int value);
+      void smoothnessHorizontalSlider_onValueChanged(int value);
 
 protected:
 };

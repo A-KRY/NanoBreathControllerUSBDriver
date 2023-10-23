@@ -53,12 +53,12 @@
        <number>30</number>
       </property>
       <item>
-       <widget class="QLabel" name="availableUsbPortLabel">
+       <widget class="QLabel" name="usbPortLabel">
         <property name="enabled">
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>Available USB Port</string>
+         <string>USB Port</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -69,7 +69,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="availableUsbPortComboBox"/>
+       <widget class="QComboBox" name="usbPortComboBox"/>
       </item>
      </layout>
     </item>
@@ -90,7 +90,7 @@
       <item>
        <widget class="QLabel" name="midiChannelLabel">
         <property name="text">
-         <string>MIDI Port</string>
+         <string>MIDI Channel</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
