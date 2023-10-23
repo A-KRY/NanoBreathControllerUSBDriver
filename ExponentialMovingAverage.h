@@ -31,8 +31,14 @@ private:
      */
     double ema;
 
+    static const double minAlpha, maxAlpha;
+
 public:
-    explicit ExponentialMovingAverage(double alpha = 1.0, double ema = 0.0, bool isReset = true);
+    explicit ExponentialMovingAverage(double alpha = 1.0);
+
+    static double MinAlpha();
+
+    static double MaxAlpha();
 
     /**
      * @brief   <p>设置 EMA 的 newAlpha 值</p>

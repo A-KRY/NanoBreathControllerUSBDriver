@@ -4,10 +4,14 @@
 
 #include "ExponentialMovingAverage.h"
 
-ExponentialMovingAverage::ExponentialMovingAverage(double alpha, double ema, bool isReset) :
-        alpha(alpha)
-    , ema(ema)
-    , isReset(isReset)
+// Constants
+const double ExponentialMovingAverage::minAlpha = 0.1, ExponentialMovingAverage::maxAlpha = 1.0;
+
+// Methods
+ExponentialMovingAverage::ExponentialMovingAverage(double alpha) :
+    alpha(alpha)
+    , ema(0.0)
+    , isReset(true)
 {
 
 }
@@ -34,4 +38,12 @@ void ExponentialMovingAverage::reset() {
 void ExponentialMovingAverage::resetAll() {
     alpha = 1.0;
     isReset = true;
+}
+
+double ExponentialMovingAverage::MinAlpha() {
+    return minAlpha;
+}
+
+double ExponentialMovingAverage::MaxAlpha() {
+    return maxAlpha;
 }

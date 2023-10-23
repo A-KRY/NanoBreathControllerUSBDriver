@@ -42,6 +42,15 @@ DriverWindow::DriverWindow(QWidget *parent)
     // serialPort 回调函数
     // serialPort callbacks
     connect(serialPort, &QSerialPort::readyRead, this, &DriverWindow::serialPort_onDataReceived);
+
+    // smoothnessHorizontalSlider
+    ui->smoothnessHorizontalSlider->setTickPosition(QSlider::NoTicks);
+    ui->smoothnessHorizontalSlider->setMinimum(0);
+    ui->smoothnessHorizontalSlider->setMaximum(100);
+    ui->smoothnessHorizontalSlider->setTickInterval(1);
+    connect(ui->smoothnessHorizontalSlider, &QSlider::valueChanged, this,
+            &DriverWindow::smoothnessHorizontalSlider_onValueChanged);
+    ui->smoothnessHorizontalSlider->setValue(50);
 }
 
 DriverWindow::~DriverWindow()
@@ -122,5 +131,13 @@ void DriverWindow::updateAvailableUsbPort() {
     ui->availableUsbPortComboBox->setCurrentIndex(
             index == -1 ? 0 : index
             );
+}
+
+double DriverWindow::smoothnessHorizontalSlider_onValueChanged(int value) {
+    // alpha = (ExponentialMovingAverage::MaxAlpha() - ExponentialMovingAverage::MinAlpha())
+    // * ( 1 - static_cast<double>(value) / (ui->smoothnessHorizontalSlider->maximum()-ui->smoothnessHorizontalSlider->minimum()))
+    // + ExponentialMovingAverage::MinAlpha();
+    // Now is 0.9*(1-value/100)+0.1
+    EMA->setAlpha(1-0.009*value);
 }
 

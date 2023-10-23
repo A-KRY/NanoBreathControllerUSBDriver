@@ -97,6 +97,15 @@ private:
        */
       void serialPort_onDataReceived();
 
+      /**
+       * @brief   <p>从 smoothnessHorizontalSlider 获取 <i>alpha</i> 值</p>
+       * <p>Get <i>alpha</i> from smoothnessHorizontalSlider</p>
+       * @return <i>alpha</i> of EMA set by user
+       * @author  A-KRY
+       * @date    2023/10/23 9:46
+       */
+      double smoothnessHorizontalSlider_onValueChanged(int value);
+
 protected:
 };
 #endif // DRIVERWINDOW_H

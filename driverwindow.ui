@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>300</height>
+    <width>350</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>40</y>
-     <width>501</width>
-     <height>151</height>
+     <width>351</width>
+     <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -36,7 +36,7 @@
      <number>10</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_UsbPort" stretch="1,3">
+     <layout class="QHBoxLayout" name="horizontalLayout_UsbPort" stretch="3,4">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -74,7 +74,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_MidiPort" stretch="1,3">
+     <layout class="QHBoxLayout" name="horizontalLayout_MidiPort" stretch="3,4">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -99,6 +99,36 @@
       </item>
       <item>
        <widget class="QComboBox" name="midiChannelComboBox"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_smoothness" stretch="3,4">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="smoothnessLabel">
+        <property name="text">
+         <string>Smoothness</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSlider" name="smoothnessHorizontalSlider">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
