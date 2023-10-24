@@ -39,6 +39,9 @@ set(PROJECT_SOURCES
         Validator/LineEditValidator.h
         EventFilter/LineEditClickOutsideFilter.cpp
         EventFilter/LineEditClickOutsideFilter.h
+        NanoEventFilter.cpp
+        NanoEventFilter.h
+        NanoEventFilter.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

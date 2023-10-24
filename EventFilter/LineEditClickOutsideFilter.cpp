@@ -7,10 +7,10 @@
 
 #include <utility>
 
-LineEditClickOutsideFilter::LineEditClickOutsideFilter(QLineEdit *lineEdit, QWidget *parent, std::function<void()> callback) :
-    QObject(parent)
+LineEditClickOutsideFilter::LineEditClickOutsideFilter(QLineEdit *lineEdit,/* QWidget *parent, */std::function<void()> callback) :
+//    QObject(parent)
 //    , lineEdit(lineEdit)
-    , callback(std::move(callback))
+    callback(std::move(callback))
 {
 
 }

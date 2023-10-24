@@ -86,7 +86,7 @@ DriverWindow::DriverWindow(QWidget *parent)
 
     // Event filter which triggers when click outside smoothnessLineEdit
     auto smoothnessLineEditClickOutsideFilter = new LineEditClickOutsideFilter(
-            ui->smoothnessLineEdit, this, onEditFinished);
+            ui->smoothnessLineEdit, onEditFinished);
     this->installEventFilter(smoothnessLineEditClickOutsideFilter);
 
 #undef SLE_NAME

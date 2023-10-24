@@ -22,7 +22,7 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
 public:
-    LineEditClickOutsideFilter(QLineEdit* lineEdit, QWidget* parent, std::function<void()> callback);
+    LineEditClickOutsideFilter(QLineEdit* lineEdit,/* QWidget* parent, */std::function<void()> callback);
 };
 
 
