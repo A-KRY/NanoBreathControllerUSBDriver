@@ -11,6 +11,10 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include "ExponentialMovingAverage.h"
+#include "EventFilter/SliderCtrlLeftClickFilter.h"
+#include "EventFilter/LineEditMouseButtonDblClickFilter.h"
+#include "EventFilter/LineEditClickOutsideFilter.h"
+#include "Validator/LineEditValidator.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DriverWindow; }

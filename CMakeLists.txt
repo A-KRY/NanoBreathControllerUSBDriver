@@ -28,9 +28,17 @@ set(PROJECT_SOURCES
         ExponentialMovingAverage.cpp
         ExponentialMovingAverage.h
         ExponentialMovingAverage.h
-        SliderEventFilter.cpp
-        SliderEventFilter.h
-        SliderEventFilter.h
+        EventFilter/SliderCtrlLeftClickFilter.cpp
+        EventFilter/SliderCtrlLeftClickFilter.h
+        EventFilter/SliderCtrlLeftClickFilter.h
+        EventFilter/LineEditMouseButtonDblClickFilter.cpp
+        EventFilter/LineEditMouseButtonDblClickFilter.h
+        EventFilter/LineEditMouseButtonDblClickFilter.h
+        Validator/LineEditValidator.cpp
+        Validator/LineEditValidator.h
+        Validator/LineEditValidator.h
+        EventFilter/LineEditClickOutsideFilter.cpp
+        EventFilter/LineEditClickOutsideFilter.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

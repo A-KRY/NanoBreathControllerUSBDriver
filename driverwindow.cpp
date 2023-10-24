@@ -1,6 +1,6 @@
 #include "driverwindow.h"
 #include "./ui_driverwindow.h"
-#include "SliderEventFilter.h"
+
 
 #define DEFAULT_PORT_NAME "(Not Connected)"
 #define INFO(TITLE, TEXT) QMessageBox::information(this, (TITLE), (TEXT), QMessageBox::Ok);
@@ -52,12 +52,47 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessHorizontalSlider->setTickInterval(1);
     ui->smoothnessHorizontalSlider->setValue(50);
 
-    auto smoothnessSliderFilter = new SliderEventFilter(ui->smoothnessHorizontalSlider);
-    ui->smoothnessHorizontalSlider->installEventFilter(smoothnessSliderFilter);
+    auto smoothnessSliderCtrlLeftClickFilter = new SliderCtrlLeftClickFilter(ui->smoothnessHorizontalSlider);
+    ui->smoothnessHorizontalSlider->installEventFilter(smoothnessSliderCtrlLeftClickFilter);
 
     connect(ui->smoothnessHorizontalSlider, &QSlider::valueChanged, this,
             &DriverWindow::smoothnessHorizontalSlider_onValueChanged);
 
+    // smoothnessLineEdit
+#define SLE_NAME "Smoothness"
+    auto smoothnessLineEditDblClickFilter = new LineEditMouseButtonDblClickFilter(
+            ui->smoothnessLineEdit,
+            [&](){
+                ui->smoothnessLineEdit->setText(QString::number(ui->smoothnessHorizontalSlider->value()));
+                ui->smoothnessLineEdit->setReadOnly(false);
+                ui->smoothnessLineEdit->setStyleSheet("");
+                ui->smoothnessLineEdit->setSelection(0, static_cast<int>(ui->smoothnessLineEdit->text().length()));
+            });
+    ui->smoothnessLineEdit->installEventFilter(smoothnessLineEditDblClickFilter);
+
+    auto onEditFinished = [&](){
+        const static QRegularExpression rx("\\d+");
+        auto match = rx.match(ui->smoothnessLineEdit->text());
+        if (match.hasMatch() and match.captured(0) == ui->smoothnessLineEdit->text()
+            and 0 <= ui->smoothnessLineEdit->text().toInt() and ui->smoothnessLineEdit->text().toInt() <= 100) {
+            ui->smoothnessHorizontalSlider->setValue(ui->smoothnessLineEdit->text().toInt());
+        }
+        ui->smoothnessLineEdit->setReadOnly(true);
+        ui->smoothnessLineEdit->setText(SLE_NAME);
+        ui->smoothnessLineEdit->setStyleSheet("background-color: transparent; border: none;padding: 0; margin: 0;");
+    };
+
+    connect(ui->smoothnessLineEdit, &QLineEdit::editingFinished, this, onEditFinished);
+
+    // Event filter which triggers when click outside smoothnessLineEdit
+    auto smoothnessLineEditClickOutsideFilter = new LineEditClickOutsideFilter(
+            ui->smoothnessLineEdit, this, onEditFinished);
+    this->installEventFilter(smoothnessLineEditClickOutsideFilter);
+
+#undef SLE_NAME
+
+    // 永远最后调用
+    // Always called last.
     loadFromJson();
 }
 

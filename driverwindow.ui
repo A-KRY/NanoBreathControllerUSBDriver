@@ -36,7 +36,7 @@
      <number>10</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_UsbPort" stretch="3,4">
+     <layout class="QHBoxLayout" name="horizontalLayout_UsbPort" stretch="1,2">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -74,7 +74,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_MidiPort" stretch="3,4">
+     <layout class="QHBoxLayout" name="horizontalLayout_MidiPort" stretch="1,2">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -103,7 +103,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_smoothness" stretch="3,4">
+     <layout class="QHBoxLayout" name="horizontalLayout_smoothness" stretch="1,2">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -114,9 +114,18 @@
        <number>30</number>
       </property>
       <item>
-       <widget class="QLabel" name="smoothnessLabel">
+       <widget class="QLineEdit" name="smoothnessLineEdit">
+        <property name="styleSheet">
+         <string notr="true"> background-color: transparent; border: none;padding: 0; margin: 0;</string>
+        </property>
         <property name="text">
          <string>Smoothness</string>
+        </property>
+        <property name="maxLength">
+         <number>10</number>
+        </property>
+        <property name="cursorPosition">
+         <number>10</number>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
