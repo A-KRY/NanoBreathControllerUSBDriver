@@ -33,6 +33,7 @@ DriverWindow::DriverWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setWindowTitle("Nano Breath Controller USB Driver");
+    this->setFixedSize(this->size());
 
     /*
      * Available USB port update
