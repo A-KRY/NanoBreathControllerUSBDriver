@@ -4,6 +4,22 @@
 #define DEFAULT_PORT_NAME "(Not Connected)"
 //#define INFO(TITLE, TEXT) QMessageBox::information(this, (TITLE), (TEXT), QMessageBox::Ok);
 
+// region #define Macro of smoothnessLineEdit_onEditFinished
+#define SMOOTHNESSLINEEDIT_ONEDITFINISHED const static QRegularExpression rx("\\d+%?"); \
+    auto match = rx.match(ui->smoothnessLineEdit->text()); \
+    if (match.hasMatch() and match.captured(0) == ui->smoothnessLineEdit->text())  { \
+        auto inputVal = ui->smoothnessLineEdit->text().back() == '%' \
+                        ?   ui->smoothnessLineEdit->text().removeLast().toInt() \
+                        :   ui->smoothnessLineEdit->text().toInt(); \
+        if (0 <= inputVal and inputVal <= 100) { \
+            ui->smoothnessHorizontalSlider->setValue(inputVal); \
+        } \
+    } \
+    ui->smoothnessLineEdit->setReadOnly(true); \
+    ui->smoothnessLineEdit->setText(SLE_NAME); \
+    ui->smoothnessLineEdit->setStyleSheet("background-color: transparent; border: none;padding: 0; margin: 0;");
+// endregion
+
 DriverWindow::DriverWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::DriverWindow)
@@ -147,6 +163,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     };
     connect(serialPort, &QSerialPort::readyRead, this, serialPort_onDataReceived);
 
+#define SLE_NAME "Smoothness"
     /*
      * smoothnessHorizontalSlider
      */
@@ -190,12 +207,128 @@ DriverWindow::DriverWindow(QWidget *parent)
         // + ExponentialMovingAverage::MinAlpha();
         // Now is 0.9*(1-value/100)+0.1
         EMA->setAlpha(1-0.009*value);
+        // 让 smoothnessLineEdit 显示数值
+        // Let smoothnessLineEdit display value
+        if (ui->smoothnessHorizontalSlider->isSliderDown()) {
+            ui->smoothnessLineEdit->setText(QString::number(value)+"%");
+        }
     };
     connect(ui->smoothnessHorizontalSlider, &QSlider::valueChanged, this,
             smoothnessHorizontalSlider_onValueChanged);
 
+    // 鼠标抬起时恢复 smoothnessLineEdit 名称
+    // Restore name of smoothnessLineEdit when slider released
+    auto smoothnessHorizontalSlider_onSliderReleased = [this]() {
+        ui->smoothnessLineEdit->setText(SLE_NAME);
+    };
+    connect(ui->smoothnessHorizontalSlider, &QSlider::sliderReleased, this, smoothnessHorizontalSlider_onSliderReleased);
+
+    // 双击 smoothnessHorizontalSlider 时，编辑 smoothnessLineEdit，流程和下面的 smoothnessLineEdit_DblClickFilter_callback 一样
+    // Edit smoothnessLineEdit when double-click on smoothnessHorizontalSlider occurs.
+    // Do the totally same thing as smoothnessLineEdit_DblClickFilter_callback below.
+    auto smoothnessHorizontalSlider_DblClickFilter_callback = [this](NEF_PARAMS) {
+        if (watched == ui->smoothnessHorizontalSlider and event->type() == QEvent::MouseButtonDblClick) {
+            ui->smoothnessLineEdit->setText(QString::number(ui->smoothnessHorizontalSlider->value()));
+            ui->smoothnessLineEdit->setReadOnly(false);
+            ui->smoothnessLineEdit->setStyleSheet("");
+            ui->smoothnessLineEdit->setSelection(0, static_cast<int>(ui->smoothnessLineEdit->text().length()));
+            // 不同之处：调用 setFocus() 以触发 smoothnessLineEdit_ClickOutsideFilter
+            // Difference: setFocus() to trigger smoothnessLineEdit_ClickOutsideFilter
+            ui->smoothnessLineEdit->setFocus();
+            // 差异结束
+            // End difference
+            return true;
+        }
+        NEF_RETURN
+    };
+    auto smoothnessHorizontalSlider_DblClickFilter = new NanoEventFilter(smoothnessHorizontalSlider_DblClickFilter_callback);
+    ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_DblClickFilter);
+
+    /**
+     * @brief   <p>用于单击 <b><i>smoothnessHorizontalSlider</i></b> 滑杆时
+     * <b><i>smoothnessLineEdit</i></b> 文本的更改与恢复</p>
+     * <p>Used for change and reset of <b><i>smoothnessLineEdit</i></b>
+     * when clicking rod of <b><i>smoothnessHorizontalSlider</i></b>. </p>
+     * @author  A-KRY
+     * @date    2023/10/25 16:45
+     */
+    bool isClickedRod = false;
+    /**
+     * @brief   <p>单击 <b><i>smoothnessHorizontalSlider</i></b> 滑杆时跳转，单击滑块时滑动</p>
+     * <p>Jump when clicked rod of <b><i>smoothnessHorizontalSlider</i></b>, slide when clicked bar.</p>
+     * @param
+     * @return
+     * @author  A-KRY
+     * @date    2023/10/25 16:27
+     */
+    auto smoothnessHorizontalSlider_SingleClickFilter_callback = [this, &isClickedRod](NEF_PARAMS) {
+        if (watched == ui->smoothnessHorizontalSlider and event->type() == QEvent::MouseButtonPress) {
+            auto mouseEvent = dynamic_cast<QMouseEvent*>(event);
+            if (mouseEvent) {
+                auto clickPos = mouseEvent->pos().x();
+                auto sliderPos = static_cast<double>(ui->smoothnessHorizontalSlider->value() - ui->smoothnessHorizontalSlider->minimum())
+                        / (ui->smoothnessHorizontalSlider->maximum()-ui->smoothnessHorizontalSlider->minimum())
+                        * ui->smoothnessHorizontalSlider->width();
+                auto sliderWidth = static_cast<double>(ui->smoothnessHorizontalSlider->style()->pixelMetric(QStyle::PM_SliderThickness, nullptr, ui->smoothnessHorizontalSlider));
+                auto retVal = false;
+                if (qAbs(clickPos - sliderPos) <= sliderWidth / 2)
+                {
+                    // 此时点击的是滑块，用默认移动方式
+                    // Now is clicking slider bar, use default action.
+                    retVal = false;
+                }
+                else {
+                    // 此时点击的是滑杆，直接跳转到单击位置
+                    // Now is clicking slider rod, jump to clicked location.
+                    ui->smoothnessHorizontalSlider->setValue(QStyle::sliderValueFromPosition(
+                            ui->smoothnessHorizontalSlider->minimum(),
+                            ui->smoothnessHorizontalSlider->maximum(),
+                            mouseEvent->pos().x(),
+                            ui->smoothnessHorizontalSlider->width()
+                    ));
+
+                    isClickedRod = true;
+                    retVal = true;
+                }
+                // 显示平滑度百分比
+                // Show percentage of smoothness.
+                ui->smoothnessLineEdit->setText(QString::number(ui->smoothnessHorizontalSlider->value())+'%');
+
+                return retVal;
+            }
+        }
+        NEF_RETURN
+    };
+    auto smoothnessHorizontalSlider_SingleClickFilter = new NanoEventFilter(smoothnessHorizontalSlider_SingleClickFilter_callback);
+    ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_SingleClickFilter);
+
+    /**
+     * @brief   <p>从滑杆释放时恢复 smoothnessLineEdit 的文本</p>
+     * <p>Restore text of smoothnessLineEdit when released from rod.</p>
+     * @param
+     * @return
+     * @author  A-KRY
+     * @date    2023/10/25 16:31
+     */
+    auto smoothnessHorizontalSlider_ClickReleaseFilter_callback = [this, &isClickedRod](NEF_PARAMS) {
+        if (isClickedRod and watched == ui->smoothnessHorizontalSlider and event->type() == QEvent::MouseButtonRelease) {
+            isClickedRod = false;
+            // 此时点击的是滑杆，恢复文本
+            // Now is clicking slider rod, restore the text of smoothnessLineEdit.
+            ui->smoothnessLineEdit->setText(SLE_NAME);
+            return true;
+        }
+        NEF_RETURN
+    };
+    auto smoothnessHorizontalSlider_ClickReleaseFilter = new NanoEventFilter(smoothnessHorizontalSlider_ClickReleaseFilter_callback);
+    ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_ClickReleaseFilter);
+
+    //
     // smoothnessLineEdit
-#define SLE_NAME "Smoothness"
+    //
+
+    ui->smoothnessLineEdit->setReadOnly(true);
+
     auto smoothnessLineEdit_DblClickFilter_callback = [this](NEF_PARAMS){
         if (watched == ui->smoothnessLineEdit and event->type() == QEvent::MouseButtonDblClick) {
             ui->smoothnessLineEdit->setText(QString::number(ui->smoothnessHorizontalSlider->value()));
@@ -210,15 +343,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessLineEdit->installEventFilter(smoothnessLineEdit_DblClickFilter);
 
     auto smoothnessLineEdit_onEditFinished = [this]() {
-        const static QRegularExpression rx("\\d+");
-        auto match = rx.match(ui->smoothnessLineEdit->text());
-        if (match.hasMatch() and match.captured(0) == ui->smoothnessLineEdit->text()
-            and 0 <= ui->smoothnessLineEdit->text().toInt() and ui->smoothnessLineEdit->text().toInt() <= 100) {
-            ui->smoothnessHorizontalSlider->setValue(ui->smoothnessLineEdit->text().toInt());
-        }
-        ui->smoothnessLineEdit->setReadOnly(true);
-        ui->smoothnessLineEdit->setText(SLE_NAME);
-        ui->smoothnessLineEdit->setStyleSheet("background-color: transparent; border: none;padding: 0; margin: 0;");
+        SMOOTHNESSLINEEDIT_ONEDITFINISHED
     };
 
     connect(ui->smoothnessLineEdit, &QLineEdit::editingFinished, this, smoothnessLineEdit_onEditFinished);
@@ -233,8 +358,8 @@ DriverWindow::DriverWindow(QWidget *parent)
                  * We could have called <b><i>smoothnessLineEdit_onEditFinished()</i></b> inside this <b>if</b>.</p>
                  * <p>但是从这里调用的 smoothnessLineEdit_onEditFinished() 不知为何无法捕获 'this' 指针，最终会导致程序崩溃 <br>
                  * But smoothnessLineEdit_onEditFinished() called from here can not capture 'this' pointer somehow, which would cause crash.</p>
-                 * <p>因此只能将 smoothnessLineEdit_onEditFinished() 的内容再复制一遍 <br>
-                 * Therefore I have no choice but to copy the content of smoothnessLineEdit_onEditFinished() again.</p>
+                 * <p>因此只能通过宏来实现代码重用<br>
+                 * Therefore I have no choice but to realize code reuse by macro.</p>
                  * <p>————————————————</p>
                  * <p>实际上 lambda 表达式的这种用法不应出错，例如：<br>
                  * In fact, this usage of lambda should not cause error, for example:<br></p>
@@ -246,26 +371,19 @@ DriverWindow::DriverWindow(QWidget *parent)
                  * @endcode
                  * <br>
                  * <p>上述代码经过测试完全不存在任何问题 <br>
-                 * The code above has been tested with no problem at all!</p>
+                 * The code above has been tested with no problem at all :(</p>
                  * @author A-KRY
                  * @date 2023/10/25 10:04
                  */
                 [[maybe_unused]]auto READ_ME = nullptr;
 
-                const static QRegularExpression rx("\\d+");
-                auto match = rx.match(ui->smoothnessLineEdit->text());
-                if (match.hasMatch() and match.captured(0) == ui->smoothnessLineEdit->text()
-                    and 0 <= ui->smoothnessLineEdit->text().toInt() and ui->smoothnessLineEdit->text().toInt() <= 100) {
-                    ui->smoothnessHorizontalSlider->setValue(ui->smoothnessLineEdit->text().toInt());
-                }
-                ui->smoothnessLineEdit->setReadOnly(true);
-                ui->smoothnessLineEdit->setText(SLE_NAME);
-                ui->smoothnessLineEdit->setStyleSheet("background-color: transparent; border: none;padding: 0; margin: 0;");
+                SMOOTHNESSLINEEDIT_ONEDITFINISHED
                 return true;
             }
         }
         NEF_RETURN
     };
+
     auto smoothnessLineEdit_ClickOutsideFilter = new NanoEventFilter(smoothnessLineEdit_ClickOutsideFilter_callback);
     this->installEventFilter(smoothnessLineEdit_ClickOutsideFilter);
 
