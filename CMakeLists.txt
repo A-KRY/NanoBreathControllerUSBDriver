@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.5)
 
 project(NanoBreathControllerUSBDriver VERSION 0.1 LANGUAGES CXX)
 
+# 改为您 Qt 的 mingw 路径
+# Replace with your MinGW path of Qt.
 set(CMAKE_PREFIX_PATH  "I:\\Qt\\6.6.0\\mingw_64")
+
+# 改为您 teVirtualMIDISDK 的路径
+# Replace with your teVirtualMIDISDK path.
+set(teVirtualMIDISDK_DIR "C:/Program Files (x86)/Tobias Erichsen/teVirtualMIDISDK/C-Binding")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -16,7 +22,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Ser
 
 set(TS_FILES NanoBreathControllerUSBDriver_zh_CN.ts)
 
-set(teVirtualMIDISDK_DIR "C:/Program Files (x86)/Tobias Erichsen/teVirtualMIDISDK/C-Binding")
 include_directories(${teVirtualMIDISDK_DIR})
 
 set(PROJECT_SOURCES

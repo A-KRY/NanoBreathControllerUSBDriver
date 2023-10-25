@@ -33,6 +33,8 @@ DriverWindow::DriverWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->setWindowTitle("Nano Breath Controller USB Driver");
+
     /*
      * Available USB port update
      * 可用 USB 端口更新
@@ -125,24 +127,6 @@ DriverWindow::DriverWindow(QWidget *parent)
             this, usbPortComboBox_onActivated);
 
     /*
-     * midiChannelComboBox Callbacks
-     * midiChannelComboBox 回调函数
-     */
-    /**
-     * @brief   <p>选中 <b><i>midiChannelComboBox</i></b> 的选项后设置对应 MIDI 通道</p>
-     * <p>Set MIDI channel to which selected by <b><i>midiChannelComboBox</i></b>.</p>
-     * @param   index <p>选中项的 ID</p>
-     * <p>ID of selected item.</p>
-     * @author  A-KRY
-     * @date    2023/10/24 11:44
-     */
-    auto midiChannelComboBox_onActivated = [this](int index){
-            midiChannel = index;
-    };
-    connect(ui->midiChannelComboBox, &QComboBox::activated,
-            this, midiChannelComboBox_onActivated);
-
-    /*
      * serialPort 回调函数
      * serialPort callbacks
      */
@@ -162,6 +146,24 @@ DriverWindow::DriverWindow(QWidget *parent)
         }
     };
     connect(serialPort, &QSerialPort::readyRead, this, serialPort_onDataReceived);
+
+    /*
+     * midiChannelComboBox Callbacks
+     * midiChannelComboBox 回调函数
+     */
+    /**
+     * @brief   <p>选中 <b><i>midiChannelComboBox</i></b> 的选项后设置对应 MIDI 通道</p>
+     * <p>Set MIDI channel to which selected by <b><i>midiChannelComboBox</i></b>.</p>
+     * @param   index <p>选中项的 ID</p>
+     * <p>ID of selected item.</p>
+     * @author  A-KRY
+     * @date    2023/10/24 11:44
+     */
+    auto midiChannelComboBox_onActivated = [this](int index){
+            midiChannel = index;
+    };
+    connect(ui->midiChannelComboBox, &QComboBox::activated,
+            this, midiChannelComboBox_onActivated);
 
 #define SLE_NAME "Smoothness"
     /*
@@ -270,7 +272,7 @@ DriverWindow::DriverWindow(QWidget *parent)
                         / (ui->smoothnessHorizontalSlider->maximum()-ui->smoothnessHorizontalSlider->minimum())
                         * ui->smoothnessHorizontalSlider->width();
                 auto sliderWidth = static_cast<double>(ui->smoothnessHorizontalSlider->style()->pixelMetric(QStyle::PM_SliderThickness, nullptr, ui->smoothnessHorizontalSlider));
-                auto retVal = false;
+                bool retVal;
                 if (qAbs(clickPos - sliderPos) <= sliderWidth / 2)
                 {
                     // 此时点击的是滑块，用默认移动方式
