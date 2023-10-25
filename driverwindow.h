@@ -10,11 +10,9 @@
 #include <QFile>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QMouseEvent>
 #include "ExponentialMovingAverage.h"
-#include "EventFilter/SliderCtrlLeftClickFilter.h"
-#include "EventFilter/LineEditMouseButtonDblClickFilter.h"
-#include "EventFilter/LineEditClickOutsideFilter.h"
-#include "Validator/LineEditValidator.h"
+#include "NanoEventFilter.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DriverWindow; }
@@ -86,47 +84,6 @@ private:
       * @date    2023/10/23 10:54
       */
     void loadFromJson();
-
-    /**
-     * @brief   <p>更新 usbPortComboBox 的选项</p>
-     * <p> Update items in usbPortComboBox</p>
-     * @author  A-KRY
-     * @date    2023/10/21 17:36
-     */
-    void updateAvailableUsbPort();
-    
-    /**
-     * @brief   <p>usbPortComboBox 选中项变更的回调函数</p>
-     * <p>usbPortComboBox current index changed callback.</p>
-     * @author  A-KRY
-     * @date    2023/10/22 14:48
-     */
-     void usbPortComboBox_onActivated(int index);
-     
-     /**
-      * @brief   <p>midiChannelComboBox 选中项变更的回调函数</p>
-      * <p>midiChannelComboBox current index changed callback.</p>
-      * @author  A-KRY
-      * @date    2023/10/22 14:52
-      */
-      void midiChannelComboBox_onActivated(int index);
-
-      /**
-       * @brief   <p>serialPort接收数据回调</p>
-       * <p>serialPort data receive callback</p>
-       * @author  A-KRY
-       * @date    2023/10/23 8:44
-       */
-      void serialPort_onDataReceived();
-
-      /**
-       * @brief   <p>从 smoothnessHorizontalSlider 获取 <i>alpha</i> 值</p>
-       * <p>Get <i>alpha</i> from smoothnessHorizontalSlider</p>
-       * @return <i>alpha</i> of EMA set by user
-       * @author  A-KRY
-       * @date    2023/10/23 9:46
-       */
-      void smoothnessHorizontalSlider_onValueChanged(int value);
 
 protected:
 };

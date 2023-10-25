@@ -5,22 +5,16 @@
 #include "NanoEventFilter.h"
 
 NanoEventFilter::NanoEventFilter(
-        const std::function<bool(QObject *, QEvent *)> &callback , QObject *objPtr)
+        const std::function<bool(QObject *, QEvent *)> &callback)
     : callback(callback)
-    , objPtr(objPtr)
 {
 
 }
 
-bool NanoEventFilter::eventFilter(QObject *watched, QEvent *event) {
-    callback(watched, event);
-    return QObject::eventFilter(watched, event);
+bool NanoEventFilter::eventFilter(NEF_PARAMS) {
+    return callback(watched, event);
 }
 
 void NanoEventFilter::setCallback(const std::function<bool(QObject *, QEvent *)> &callbackMethod) {
     NanoEventFilter::callback = callbackMethod;
-}
-
-void NanoEventFilter::setObjPtr(QObject *qObject) {
-    NanoEventFilter::objPtr = qObject;
 }
