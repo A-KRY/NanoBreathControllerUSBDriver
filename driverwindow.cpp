@@ -32,7 +32,6 @@ DriverWindow::DriverWindow(QWidget *parent)
     , EMA(new ExponentialMovingAverage(0.5))
 {
     ui->setupUi(this);
-
     this->setWindowTitle("Nano Breath Controller USB Driver");
 
     /*
@@ -450,6 +449,11 @@ void DriverWindow::loadFromJson() {
 
         settingFile.close();
     }
+}
+
+void DriverWindow::closeEvent(QCloseEvent *event) {
+    event->ignore();
+    this->hide();
 }
 
 #undef SETTING_FILE

@@ -11,6 +11,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QMouseEvent>
+#include <QSystemTrayIcon>
+#include <QMenu>
 #include "ExponentialMovingAverage.h"
 #include "NanoEventFilter.h"
 
@@ -21,6 +23,9 @@ QT_END_NAMESPACE
 class DriverWindow : public QWidget
 {
     Q_OBJECT
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
     /**
      * @author  A-KRY
