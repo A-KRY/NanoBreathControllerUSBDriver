@@ -2,4 +2,9 @@
     <qresource prefix="/icon">
         <file>SystemTrayIcon.png</file>
     </qresource>
+    <qresource prefix="/languages">
+        <file>en_US.qm</file>
+        <file>ja_JP.qm</file>
+        <file>zh_CN.qm</file>
+    </qresource>
 </RCC>

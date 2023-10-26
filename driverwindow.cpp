@@ -1,8 +1,7 @@
 #include "driverwindow.h"
 #include "./ui_driverwindow.h"
 
-#define DEFAULT_PORT_NAME "(Not Connected)"
-//#define INFO(TITLE, TEXT) QMessageBox::information(this, (TITLE), (TEXT), QMessageBox::Ok);
+#define INFO(TEXT) QMessageBox::information(this, "INFO", (TEXT), QMessageBox::Ok);
 
 // region #define Macro of smoothnessLineEdit_onEditFinished
 #define SMOOTHNESSLINEEDIT_ONEDITFINISHED const static QRegularExpression rx("\\d+%?"); \
@@ -16,7 +15,7 @@
         } \
     } \
     ui->smoothnessLineEdit->setReadOnly(true); \
-    ui->smoothnessLineEdit->setText(SLE_NAME); \
+    ui->smoothnessLineEdit->setText(tr("Smoothness")); \
     ui->smoothnessLineEdit->setStyleSheet("background-color: transparent; border: none;padding: 0; margin: 0;");
 // endregion
 
@@ -30,10 +29,14 @@ DriverWindow::DriverWindow(QWidget *parent)
     , midiChannel(0)
     , serialPort(new QSerialPort())
     , EMA(new ExponentialMovingAverage(0.5))
+    , trayMenu(nullptr)
+    , currentLanguage("English")
 {
     ui->setupUi(this);
-    this->setWindowTitle("Nano Breath Controller USB Driver");
     this->setFixedSize(this->size());
+    this->setWindowTitle(tr("Nano Breath Controller USB Driver"));
+    this->ui->usbPortLabel->setText(tr("USB Port"));
+    this->ui->midiChannelLabel->setText(tr("MIDI Channel"));
 
     /*
      * Available USB port update
@@ -51,7 +54,7 @@ DriverWindow::DriverWindow(QWidget *parent)
         QString previousText = ui->usbPortComboBox->currentText();
 
         ui->usbPortComboBox->clear();
-        ui->usbPortComboBox->addItem(DEFAULT_PORT_NAME);
+        ui->usbPortComboBox->addItem(tr("(Not Connected)"));
         const auto availablePorts = QSerialPortInfo::availablePorts();
         for (auto& portInfo : availablePorts) {
             ui->usbPortComboBox->addItem(portInfo.portName());
@@ -101,7 +104,7 @@ DriverWindow::DriverWindow(QWidget *parent)
         if (serialPort->portName() != ui->usbPortComboBox->currentText()) {
             if (serialPort->isOpen()) {
                 serialPort->close();
-                serialPort->setPortName(DEFAULT_PORT_NAME);
+                serialPort->setPortName(tr("(Not Connected)"));
             }
         }
 
@@ -117,9 +120,9 @@ DriverWindow::DriverWindow(QWidget *parent)
                 return;
             }
             else {
-                QMessageBox::information(this, "Error", "串口打开失败", QMessageBox::Ok);
+                QMessageBox::information(this, tr("Error"), tr("Serial port open failed."), QMessageBox::Ok);
                 ui->usbPortComboBox->setCurrentIndex(0);
-                serialPort->setPortName(DEFAULT_PORT_NAME);
+                serialPort->setPortName(tr("(Not Connected)"));
             }
         }
     };
@@ -165,7 +168,6 @@ DriverWindow::DriverWindow(QWidget *parent)
     connect(ui->midiChannelComboBox, &QComboBox::activated,
             this, midiChannelComboBox_onActivated);
 
-#define SLE_NAME "Smoothness"
     /*
      * smoothnessHorizontalSlider
      */
@@ -187,6 +189,7 @@ DriverWindow::DriverWindow(QWidget *parent)
             if (mouseEvent and (mouseEvent->button() == Qt::LeftButton)
                 and (mouseEvent->modifiers() == Qt::ControlModifier)) {
                 ui->smoothnessHorizontalSlider->setValue((ui->smoothnessHorizontalSlider->maximum()+ui->smoothnessHorizontalSlider->minimum())>>1);
+                ui->smoothnessLineEdit->setText(tr("Smoothness"));
                 return true;
             }
         }
@@ -209,11 +212,11 @@ DriverWindow::DriverWindow(QWidget *parent)
         // + ExponentialMovingAverage::MinAlpha();
         // Now is 0.9*(1-value/100)+0.1
         EMA->setAlpha(1-0.009*value);
+
         // 让 smoothnessLineEdit 显示数值
         // Let smoothnessLineEdit display value
-        if (ui->smoothnessHorizontalSlider->isSliderDown()) {
-            ui->smoothnessLineEdit->setText(QString::number(value)+"%");
-        }
+        ui->smoothnessLineEdit->setText(QString::number(value)+"%");
+
     };
     connect(ui->smoothnessHorizontalSlider, &QSlider::valueChanged, this,
             smoothnessHorizontalSlider_onValueChanged);
@@ -221,7 +224,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     // 鼠标抬起时恢复 smoothnessLineEdit 名称
     // Restore name of smoothnessLineEdit when slider released
     auto smoothnessHorizontalSlider_onSliderReleased = [this]() {
-        ui->smoothnessLineEdit->setText(SLE_NAME);
+        ui->smoothnessLineEdit->setText(tr("Smoothness"));
     };
     connect(ui->smoothnessHorizontalSlider, &QSlider::sliderReleased, this, smoothnessHorizontalSlider_onSliderReleased);
 
@@ -277,7 +280,6 @@ DriverWindow::DriverWindow(QWidget *parent)
                 {
                     // 此时点击的是滑块，用默认移动方式
                     // Now is clicking slider bar, use default action.
-                    retVal = false;
                 }
                 else {
                     // 此时点击的是滑杆，直接跳转到单击位置
@@ -290,13 +292,10 @@ DriverWindow::DriverWindow(QWidget *parent)
                     ));
 
                     isClickedRod = true;
-                    retVal = true;
                 }
                 // 显示平滑度百分比
                 // Show percentage of smoothness.
                 ui->smoothnessLineEdit->setText(QString::number(ui->smoothnessHorizontalSlider->value())+'%');
-
-                return retVal;
             }
         }
         NEF_RETURN
@@ -317,7 +316,7 @@ DriverWindow::DriverWindow(QWidget *parent)
             isClickedRod = false;
             // 此时点击的是滑杆，恢复文本
             // Now is clicking slider rod, restore the text of smoothnessLineEdit.
-            ui->smoothnessLineEdit->setText(SLE_NAME);
+            ui->smoothnessLineEdit->setText(tr("Smoothness"));
             return true;
         }
         NEF_RETURN
@@ -389,8 +388,6 @@ DriverWindow::DriverWindow(QWidget *parent)
     auto smoothnessLineEdit_ClickOutsideFilter = new NanoEventFilter(smoothnessLineEdit_ClickOutsideFilter_callback);
     this->installEventFilter(smoothnessLineEdit_ClickOutsideFilter);
 
-#undef SLE_NAME
-
     // 永远最后调用
     // Always called last.
     loadFromJson();
@@ -410,16 +407,25 @@ DriverWindow::~DriverWindow()
 }
 
 #define SETTING_FILE "settings.json"
-#define USB_PORT_JSON_KEY "USB Port"
-#define MIDI_CHANNEL_JSON_KEY "MIDI Channel"
-#define SMOOTHNESS_JSON_KEY "Smoothness"
+#define LANGUAGE "language"
+#define USB_PORT "USB Port"
+#define MIDI_CHANNEL "MIDI Channel"
+#define SMOOTHNESS "Smoothness"
 
 void DriverWindow::saveToJson() {
     QJsonObject jsonObject;
-    jsonObject[USB_PORT_JSON_KEY] = ui->usbPortComboBox->currentText();
-    jsonObject[MIDI_CHANNEL_JSON_KEY] = ui->midiChannelComboBox->currentText();
-    jsonObject[SMOOTHNESS_JSON_KEY] = ui->smoothnessHorizontalSlider->value();
-
+/**
+ * @brief Add <b><i>KEY-VALUE</i></b> pair to json object.
+ * @author A-KRY
+ * @date 2023-10-26 16:05
+ */
+#define JSON_ADD(KEY, VAL) jsonObject[KEY] = VAL;
+    JSON_ADD(LANGUAGE, currentLanguage)
+    JSON_ADD(USB_PORT, ui->usbPortComboBox->currentText())
+    JSON_ADD(MIDI_CHANNEL, ui->midiChannelComboBox->currentText())
+    JSON_ADD(SMOOTHNESS, ui->smoothnessHorizontalSlider->value())
+#undef JSON_ADD
+    
     QJsonDocument jsonDocument(jsonObject);
     QByteArray jsonBytes = jsonDocument.toJson();
 
@@ -427,7 +433,6 @@ void DriverWindow::saveToJson() {
     if (settingFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QTextStream out(&settingFile);
         out << jsonBytes;
-
         settingFile.close();
     }
 }
@@ -439,15 +444,23 @@ void DriverWindow::loadFromJson() {
         QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonBytes);
         QJsonObject jsonObject = jsonDocument.object();
 
-        QString previousUsbPort = jsonObject[USB_PORT_JSON_KEY].toString();
-        ui->usbPortComboBox->setCurrentText(previousUsbPort);
+/**
+ * @brief Get <b>VALUE</b> of <b>KEY</b> from json object.
+ * @author A-KRY
+ * @date 2023-10-26 16:08
+ */
+#define VAL(KEY) jsonObject[KEY]
 
-        QString previousMidiChannel = jsonObject[MIDI_CHANNEL_JSON_KEY].toString();
-        ui->midiChannelComboBox->setCurrentText(previousMidiChannel);
 
-        int previousSmoothness = jsonObject[SMOOTHNESS_JSON_KEY].toInt();
-        ui->smoothnessHorizontalSlider->setValue(previousSmoothness);
+        currentLanguage = VAL(LANGUAGE).toString();
 
+        ui->usbPortComboBox->setCurrentText(VAL(USB_PORT).toString());
+
+        ui->midiChannelComboBox->setCurrentText(VAL(MIDI_CHANNEL).toString());
+
+        ui->smoothnessHorizontalSlider->setValue(VAL(SMOOTHNESS).toInt());
+
+#undef VAL
         settingFile.close();
     }
 }
@@ -457,9 +470,43 @@ void DriverWindow::closeEvent(QCloseEvent *event) {
     this->hide();
 }
 
+void DriverWindow::reloadText() {
+    this->setWindowTitle(tr("Nano Breath Controller USB Driver"));
+    ui->usbPortLabel->setText(tr("USB Port"));
+    ui->midiChannelLabel->setText(tr("MIDI Channel"));
+    ui->smoothnessLineEdit->setText(tr("Smoothness"));
+}
+
+void DriverWindow::switchLanguage(const QString& language) {
+    if (trayMenu) {
+        for (auto action : trayMenu->actions()) {
+            auto text = action->text().toStdString();
+            if (action->text() == language) {
+                currentLanguage = language;
+                action->trigger();
+                break;
+            }
+        }
+    }
+}
+
+//
+// Setters
+//
+
+void DriverWindow::setTrayMenu(QMenu *menu) {
+    DriverWindow::trayMenu = menu;
+    switchLanguage(currentLanguage);
+}
+
+void DriverWindow::setCurrentLanguage(const QString &language) {
+    DriverWindow::currentLanguage = language;
+}
+
 #undef SETTING_FILE
-#undef USB_PORT_JSON_KEY
-#undef MIDI_CHANNEL_JSON_KEY
-#undef SMOOTHNESS_JSON_KEY
+#undef LANGUAGE
+#undef USB_PORT
+#undef MIDI_CHANNEL
+#undef SMOOTHNESS
 
 #undef DEFAULT_PORT_NAME
