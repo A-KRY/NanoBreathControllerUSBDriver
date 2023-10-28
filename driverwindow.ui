@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>340</width>
-    <height>140</height>
+    <width>480</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>341</width>
-     <height>141</height>
+     <width>481</width>
+     <height>201</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -36,7 +36,7 @@
      <number>10</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_UsbPort" stretch="1,2">
+     <layout class="QHBoxLayout" name="horizontalLayout_usbPort" stretch="1,2">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -74,7 +74,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_MidiPort" stretch="1,2">
+     <layout class="QHBoxLayout" name="horizontalLayout_midiChannel" stretch="1,2">
       <property name="spacing">
        <number>20</number>
       </property>
@@ -99,6 +99,32 @@
       </item>
       <item>
        <widget class="QComboBox" name="midiChannelComboBox"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_ccType" stretch="1,2">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="ccLabel">
+        <property name="text">
+         <string>CC</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="ccComboBox"/>
       </item>
      </layout>
     </item>

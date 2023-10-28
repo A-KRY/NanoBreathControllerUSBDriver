@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     DriverWindow WINDOW;
 
     /**
-     * @brief   <p>系统托盘图标</p>
+     * @brief    <br><p>系统托盘图标</p>
      * <p>System tray icon.</p>
      * @author  A-KRY
      * @date    2023/10/25 17:20
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
 #define TRAY_MENU trayMenu
     /**
-     * @brief   <p>系统托盘菜单</p>
+     * @brief    <br><p>系统托盘菜单</p>
      * <p>System tray menu.</p>
      * @author  A-KRY
      * @date    2023/10/25 17:21
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
     // 退出操作
     // Exit Action
     /**
-     * @brief   <p>退出操作</p>
+     * @brief    <br><p>退出操作</p>
      * <p>Exit action.</p>
      * @author  A-KRY
      * @date    2023/10/25 17:52
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     // 显示主窗口
     // Show main window
     /**
-     * @brief   <p>双击系统托盘图标时恢复主窗口显示</p>
+     * @brief    <br><p>双击系统托盘图标时恢复主窗口显示</p>
      * <p>Show main window when double-clicked system tray icon.</p>
      * @author  A-KRY
      * @date    2023/10/25 17:52

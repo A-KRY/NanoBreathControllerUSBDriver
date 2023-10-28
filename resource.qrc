@@ -7,4 +7,8 @@
         <file>ja_JP.qm</file>
         <file>zh_CN.qm</file>
     </qresource>
+    <qresource prefix="/data"/>
+    <qresource prefix="/dat">
+        <file>cc_index_to_text.json</file>
+    </qresource>
 </RCC>

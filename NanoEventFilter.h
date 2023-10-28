@@ -17,7 +17,7 @@ private:
     std::function<bool(QObject*, QEvent*)> callback;
 public:
     /**
-     * @brief   <p>构造函数</p>
+     * @brief    <br><p>构造函数</p>
      * <p>Constructor.</p>
      * @param callback <p>回调函数，在eventFilter()内被调用。</p>
      * <p>Callback method which is the only thing called inside eventFilter().</p>
@@ -27,7 +27,7 @@ public:
     explicit NanoEventFilter(const std::function<bool(QObject *, QEvent *)> &callback = nullptr);
 
     /**
-     * @brief   <p>只做一件事，调用 <strong><i>callback();</i></strong></p>
+     * @brief    <br><p>只做一件事，调用 <strong><i>callback();</i></strong></p>
      * <p>Only do one thing, calls <strong><i>callback();</i></strong></p>
      * @return  return callback(watched, event);
      * @author  A-KRY
@@ -36,7 +36,7 @@ public:
     bool eventFilter(QObject *watched, QEvent *event) override;
 
     /**
-     * @brief   <p>成员 <strong><i>callback</i></strong> 的 setter。</p>
+     * @brief    <br><p>成员 <strong><i>callback</i></strong> 的 setter。</p>
      * <p>Setter of member <strong><i>callback</i></strong>.</p>
      * @param   callbackMethod <p>在这里重载 <strong><i>eventFilter()</strong></i></p>
      * <p>Override <strong><i>eventFilter()</strong></i> here.</p>

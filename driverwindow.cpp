@@ -31,12 +31,16 @@ DriverWindow::DriverWindow(QWidget *parent)
     , EMA(new ExponentialMovingAverage(0.5))
     , trayMenu(nullptr)
     , currentLanguage("English")
+    , currentMessageType(MidiMessageType::ControlChange)
+    , currentControlChange(1)
 {
     ui->setupUi(this);
     this->setFixedSize(this->size());
     this->setWindowTitle(tr("Nano Breath Controller USB Driver"));
     this->ui->usbPortLabel->setText(tr("USB Port"));
+    this->ui->ccLabel->setText(tr("CC"));
     this->ui->midiChannelLabel->setText(tr("MIDI Channel"));
+    this->setWindowIcon(QIcon(":icon/SystemTrayIcon.png"));
 
     /*
      * Available USB port update
@@ -44,31 +48,7 @@ DriverWindow::DriverWindow(QWidget *parent)
      */
     usbPortUpdateTimer->setInterval(1000);
 
-    /**
-     * @brief   <p>更新 <<b><i>usbPortComboBox</i></b> 内显示的可用 USB 端口</p>
-     * <p>Update available USB port in <b><i>usbPortComboBox</i></b></p>
-     * @author  A-KRY
-     * @date    2023/10/24 11:29
-     */
-    auto usbPortComboBox_updateAvailablePort = [this]() {
-        QString previousText = ui->usbPortComboBox->currentText();
-
-        ui->usbPortComboBox->clear();
-        ui->usbPortComboBox->addItem(tr("(Not Connected)"));
-        const auto availablePorts = QSerialPortInfo::availablePorts();
-        for (auto& portInfo : availablePorts) {
-            ui->usbPortComboBox->addItem(portInfo.portName());
-        }
-
-        // If previous port still exists, set selected item to it,
-        // otherwise set to 0 which corresponding "(Not Connected)"
-        // 若之前的端口还存在，将其设为当前选项。否则设为 0 即 "(Not Connected)"
-        auto index = ui->usbPortComboBox->findText(previousText);
-        ui->usbPortComboBox->setCurrentIndex(
-                index == -1 ? 0 : index
-        );
-    };
-    connect(usbPortUpdateTimer, &QTimer::timeout, this, usbPortComboBox_updateAvailablePort);
+    connect(usbPortUpdateTimer, &QTimer::timeout, this, &DriverWindow::usbPortComboBox_updateAvailablePort);
     usbPortComboBox_updateAvailablePort();
     usbPortUpdateTimer->start();
 
@@ -85,7 +65,7 @@ DriverWindow::DriverWindow(QWidget *parent)
      * usbPortComboBox 回调函数
      */
     /**
-     * @brief   <p>选中 <b><i>usbPortComboBox</i></b> 的选项后尝试打开相应端口</p>
+     * @brief    <br><p>选中 <b><i>usbPortComboBox</i></b> 的选项后尝试打开相应端口</p>
      * <p>Try to open the port when item of <b><i>usbPortComboBox</i></b> selected.</p>
      * @param index <p>选中项的 ID</p>
      * <p>ID of selected item.</p>
@@ -134,18 +114,31 @@ DriverWindow::DriverWindow(QWidget *parent)
      * serialPort callbacks
      */
     /**
-     * @brief   <p>接收到 Arduino Nano 发来的数据后发送 MIDI CC11 消息。</p>
+     * @brief    <br><p>接收到 Arduino Nano 发来的数据后发送 MIDI CC11 消息。</p>
      * <p>Once received data from Arduino Nano, send MIDI CC11 message.</p>
      * @author  A-KRY
      * @date    2023/10/24 11:47
      */
     auto serialPort_onDataReceived = [this]() {
-        auto data = serialPort->read(1);
-        if (!data.isEmpty()) {
-            BYTE midiMessage[3] = {static_cast<BYTE>(0xB0|midiChannel), 11, static_cast<BYTE>(EMA->filter(data[0]))};
-            if (midiPort) {
-                virtualMIDISendData(midiPort, midiMessage, sizeof(midiMessage));
+        if (midiPort) {
+            static QByteArray data = serialPort->read(1);
+            static BYTE ccMessage[3], cpMessage[2];
+            if (!data.isEmpty()) {
+                if (currentMessageType == MidiMessageType::ControlChange) {
+                    ccMessage[0] = static_cast<int>(currentMessageType)|midiChannel;
+                    ccMessage[1] = static_cast<BYTE>(currentControlChange);
+                    ccMessage[2] = static_cast<BYTE>(EMA->filter(data[0]));
+                    virtualMIDISendData(midiPort, ccMessage, sizeof(ccMessage));
+                }
+                else if (currentMessageType == MidiMessageType::ChannelPressure) {
+                    cpMessage[0] = static_cast<int>(currentMessageType);
+                    cpMessage[1] = static_cast<BYTE>(EMA->filter(data[0]));
+                    virtualMIDISendData(midiPort, cpMessage, sizeof(cpMessage));
+                }
             }
+        }
+        else {
+            serialPort->readAll();
         }
     };
     connect(serialPort, &QSerialPort::readyRead, this, serialPort_onDataReceived);
@@ -155,7 +148,7 @@ DriverWindow::DriverWindow(QWidget *parent)
      * midiChannelComboBox 回调函数
      */
     /**
-     * @brief   <p>选中 <b><i>midiChannelComboBox</i></b> 的选项后设置对应 MIDI 通道</p>
+     * @brief    <br><p>选中 <b><i>midiChannelComboBox</i></b> 的选项后设置对应 MIDI 通道</p>
      * <p>Set MIDI channel to which selected by <b><i>midiChannelComboBox</i></b>.</p>
      * @param   index <p>选中项的 ID</p>
      * <p>ID of selected item.</p>
@@ -169,8 +162,28 @@ DriverWindow::DriverWindow(QWidget *parent)
             this, midiChannelComboBox_onActivated);
 
     /*
+     * ccComboBox
+     */
+    auto ccComboBox_onActivated = [this](int index) {
+        if (index == 0) {
+
+        }
+        else if (index == 1) {
+            currentMessageType = MidiMessageType::ChannelPressure;
+            currentControlChange = -1;
+        }
+        else {
+            currentMessageType = MidiMessageType::ControlChange;
+            currentControlChange = getIdFromIndex(index);
+        }
+    };
+    connect(ui->ccComboBox, &QComboBox::activated,
+            this, ccComboBox_onActivated);
+
+    /*
      * smoothnessHorizontalSlider
      */
+
     ui->smoothnessHorizontalSlider->setTickPosition(QSlider::NoTicks);
     ui->smoothnessHorizontalSlider->setMinimum(0);
     ui->smoothnessHorizontalSlider->setMaximum(100);
@@ -178,7 +191,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessHorizontalSlider->setValue(50);
 
     /**
-     * @brief   <p>当按下 <b><i>Ctrl+鼠标左键</i></b> 时重置 smoothnessHorizontalSlider 位置</p>
+     * @brief    <br><p>当按下 <b><i>Ctrl+鼠标左键</i></b> 时重置 smoothnessHorizontalSlider 位置</p>
      * <p>Reset the position of <b>smoothnessHorizontalSlider</b> when <b><i>Ctrl+MouseLeftButton</i> pressed.</b></p>
      * @author  A-KRY
      * @date    2023/10/24 11:27
@@ -199,7 +212,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_CtrlLeftClickFilter);
 
     /**
-     * @brief   <p>滑块移动时更新 EMA 滤波器的 <b><i>alpha</i></b> 值</p>
+     * @brief    <br><p>滑块移动时更新 EMA 滤波器的 <b><i>alpha</i></b> 值</p>
      * <p>Update <b><i>alpha</i></b> of EMA filter when slider moves.</p>
      * @param   value <p>移动后的值</p>
      * <p>New value after moved.</p>
@@ -250,7 +263,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_DblClickFilter);
 
     /**
-     * @brief   <p>用于单击 <b><i>smoothnessHorizontalSlider</i></b> 滑杆时
+     * @brief    <br><p>用于单击 <b><i>smoothnessHorizontalSlider</i></b> 滑杆时
      * <b><i>smoothnessLineEdit</i></b> 文本的更改与恢复</p>
      * <p>Used for change and reset of <b><i>smoothnessLineEdit</i></b>
      * when clicking rod of <b><i>smoothnessHorizontalSlider</i></b>. </p>
@@ -259,7 +272,7 @@ DriverWindow::DriverWindow(QWidget *parent)
      */
     bool isClickedRod = false;
     /**
-     * @brief   <p>单击 <b><i>smoothnessHorizontalSlider</i></b> 滑杆时跳转，单击滑块时滑动</p>
+     * @brief    <br><p>单击 <b><i>smoothnessHorizontalSlider</i></b> 滑杆时跳转，单击滑块时滑动</p>
      * <p>Jump when clicked rod of <b><i>smoothnessHorizontalSlider</i></b>, slide when clicked bar.</p>
      * @param
      * @return
@@ -275,7 +288,6 @@ DriverWindow::DriverWindow(QWidget *parent)
                         / (ui->smoothnessHorizontalSlider->maximum()-ui->smoothnessHorizontalSlider->minimum())
                         * ui->smoothnessHorizontalSlider->width();
                 auto sliderWidth = static_cast<double>(ui->smoothnessHorizontalSlider->style()->pixelMetric(QStyle::PM_SliderThickness, nullptr, ui->smoothnessHorizontalSlider));
-                bool retVal;
                 if (qAbs(clickPos - sliderPos) <= sliderWidth / 2)
                 {
                     // 此时点击的是滑块，用默认移动方式
@@ -304,7 +316,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_SingleClickFilter);
 
     /**
-     * @brief   <p>从滑杆释放时恢复 smoothnessLineEdit 的文本</p>
+     * @brief    <br><p>从滑杆释放时恢复 smoothnessLineEdit 的文本</p>
      * <p>Restore text of smoothnessLineEdit when released from rod.</p>
      * @param
      * @return
@@ -410,6 +422,7 @@ DriverWindow::~DriverWindow()
 #define LANGUAGE "language"
 #define USB_PORT "USB Port"
 #define MIDI_CHANNEL "MIDI Channel"
+#define CC "CC"
 #define SMOOTHNESS "Smoothness"
 
 void DriverWindow::saveToJson() {
@@ -423,6 +436,7 @@ void DriverWindow::saveToJson() {
     JSON_ADD(LANGUAGE, currentLanguage)
     JSON_ADD(USB_PORT, ui->usbPortComboBox->currentText())
     JSON_ADD(MIDI_CHANNEL, ui->midiChannelComboBox->currentText())
+    JSON_ADD(CC, ui->ccComboBox->currentText())
     JSON_ADD(SMOOTHNESS, ui->smoothnessHorizontalSlider->value())
 #undef JSON_ADD
     
@@ -438,6 +452,20 @@ void DriverWindow::saveToJson() {
 }
 
 void DriverWindow::loadFromJson() {
+    // Load CC related object
+    QFile cc_index_to_text(":dat/cc_index_to_text.json");
+    if (cc_index_to_text.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QJsonObject jsonObject = QJsonDocument::fromJson(cc_index_to_text.readAll()).object();
+        QString text;
+        auto size = jsonObject.size();
+        for (auto i = 0; i < size; ++i) {
+            text = jsonObject[QString::number(i)].toString();
+            ui->ccComboBox->addItem(text);
+        }
+        cc_index_to_text.close();
+    }
+
+    // Load Settings
     QFile settingFile(SETTING_FILE);
     if (settingFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QByteArray jsonBytes = settingFile.readAll();
@@ -458,11 +486,32 @@ void DriverWindow::loadFromJson() {
 
         ui->midiChannelComboBox->setCurrentText(VAL(MIDI_CHANNEL).toString());
 
+        ui->ccComboBox->setCurrentText(VAL(CC).toString());
+
         ui->smoothnessHorizontalSlider->setValue(VAL(SMOOTHNESS).toInt());
 
 #undef VAL
         settingFile.close();
     }
+}
+
+void DriverWindow::usbPortComboBox_updateAvailablePort() {
+    QString previousText = ui->usbPortComboBox->currentText();
+
+    ui->usbPortComboBox->clear();
+    ui->usbPortComboBox->addItem(tr("(Not Connected)"));
+    const auto availablePorts = QSerialPortInfo::availablePorts();
+    for (auto& portInfo : availablePorts) {
+        ui->usbPortComboBox->addItem(portInfo.portName());
+    }
+
+    // If previous port still exists, set selected item to it,
+    // otherwise set to 0 which corresponding "(Not Connected)"
+    // 若之前的端口还存在，将其设为当前选项。否则设为 0 即 "(Not Connected)"
+    auto index = ui->usbPortComboBox->findText(previousText);
+    ui->usbPortComboBox->setCurrentIndex(
+            index == -1 ? 0 : index
+    );
 }
 
 void DriverWindow::closeEvent(QCloseEvent *event) {
@@ -474,7 +523,9 @@ void DriverWindow::reloadText() {
     this->setWindowTitle(tr("Nano Breath Controller USB Driver"));
     ui->usbPortLabel->setText(tr("USB Port"));
     ui->midiChannelLabel->setText(tr("MIDI Channel"));
+    ui->ccLabel->setText(tr("CC"));
     ui->smoothnessLineEdit->setText(tr("Smoothness"));
+    usbPortComboBox_updateAvailablePort();
 }
 
 void DriverWindow::switchLanguage(const QString& language) {
@@ -502,6 +553,19 @@ void DriverWindow::setTrayMenu(QMenu *menu) {
 void DriverWindow::setCurrentLanguage(const QString &language) {
     DriverWindow::currentLanguage = language;
 }
+
+int DriverWindow::getIdFromIndex(int index) {
+    if (index < 1 or index > 118) {
+        return -1;
+    }
+    else if (index < 32) {
+        return index;
+    }
+    else {
+        return index + 1;
+    }
+}
+
 
 #undef SETTING_FILE
 #undef LANGUAGE
