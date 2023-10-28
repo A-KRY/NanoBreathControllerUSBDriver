@@ -1,0 +1,26 @@
+{
+	"BUILD_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen",
+	"CMAKE_BINARY_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver",
+	"CMAKE_SOURCE_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver",
+	"INCLUDE_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/include",
+	"INPUTS" : 
+	[
+		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cc_index_to_text.json",
+		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/SystemTrayIcon.png",
+		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/en_US.qm",
+		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/zh_CN.qm",
+		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/ja_JP.qm"
+	],
+	"LOCK_FILE" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/NanoBreathControllerUSBDriver_autogen.dir/AutoRcc_resource_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "resource" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_resource.cpp",
+	"RCC_EXECUTABLE" : "I:/Qt/6.6.0/mingw_64/./bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/NanoBreathControllerUSBDriver_autogen.dir/AutoRcc_resource_EWIEGA46WW_Used.txt",
+	"SOURCE" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/resource.qrc",
+	"VERBOSITY" : 0
+}

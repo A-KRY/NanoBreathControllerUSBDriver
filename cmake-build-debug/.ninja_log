@@ -1,0 +1,80 @@
+# ninja log v5
+2	248	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+1685	6057	7201704449823414	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp.obj	7c5d51c66418e83c
+13	384	7201713424907597	NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+13	384	7201713424907597	NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+13	384	7201713424907597	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+13	384	7201713424907597	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+1706	6041	7201704449639336	CMakeFiles/NanoBreathControllerUSBDriver.dir/main.cpp.obj	a96a0a59b67012ad
+278	1868	7201715617190585	build.ninja	49f72f54ef2e0f44
+388	4949	7201713470544414	CMakeFiles/NanoBreathControllerUSBDriver.dir/driverwindow.cpp.obj	316e5278672e7ff0
+4949	5354	7201713474566549	NanoBreathControllerUSBDriver.exe	da977b3f6ce90741
+808	1620	7195137849445949	CMakeFiles/NanoBreathControllerUSBDriver.dir/I_/ProgramData/rtmidi-6.0.0/RtMidi.cpp.obj	6064c171974c00b2
+439	3501	7195147939934650	CMakeFiles/NanoBreathControllerUSBDriver.dir/RtMidi.cpp.obj	a12431b19828241b
+1820	2009	7199884131743055	CMakeFiles/NanoBreathControllerUSBDriver.dir/ExponentialMovingAverage.cpp.obj	1ae912775adbdab6
+1	1678	0	CMakeFiles/generate_ts.util	a193340858785a9c
+1398	3624	7197507367690721	CMakeFiles/NanoBreathControllerUSBDriver.dir/SliderEventFilter.cpp.obj	d91576be7e132bec
+1500	3591	7197557592133941	CMakeFiles/NanoBreathControllerUSBDriver.dir/Validator/LineEditValidator.cpp.obj	c5578caf7f4768fb
+1765	4155	7197540703484162	CMakeFiles/NanoBreathControllerUSBDriver.dir/EventFilter/SliderCtrlLeftClickFilter.cpp.obj	f0c3ddfe0664759
+1842	4414	7197540705996715	CMakeFiles/NanoBreathControllerUSBDriver.dir/EventFilter/LineEditMouseButtonDblClickFilter.cpp.obj	862b3027ec85b566
+2310	6755	7198226752601763	CMakeFiles/NanoBreathControllerUSBDriver.dir/EventFilter/LineEditClickOutsideFilter.cpp.obj	c6ad1c871fa7b846
+1934	3631	7200789845319778	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoEventFilter.cpp.obj	b826b794dc861a80
+13	170	7201710955758627	NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+13	170	7201710955758627	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+170	435	7201710958417677	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ba10ee7949a3ad34
+7	188	0	CMakeFiles/install.util	109514669b452e23
+1	95	0	CMakeFiles/clean.additional	2cb99e802f9e4b25
+96	117	0	clean	39daf64f053afe73
+0	679	0	CMakeFiles/generate_qm.util	a7b752aeb1a83329
+1	239	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+10	1316	7201716438275697	NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+10	1316	7201716438275697	NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+10	1316	7201716438275697	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+10	1316	7201716438275697	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+1316	1584	7201716442146963	NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+1316	1584	7201716442146963	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+1635	1799	7201716444302700	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ba10ee7949a3ad34
+1616	5397	7201716480287130	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp.obj	7c5d51c66418e83c
+1599	5465	7201716480950494	CMakeFiles/NanoBreathControllerUSBDriver.dir/main.cpp.obj	a96a0a59b67012ad
+1584	6097	7201716487249145	CMakeFiles/NanoBreathControllerUSBDriver.dir/driverwindow.cpp.obj	316e5278672e7ff0
+6097	6514	7201716491421313	NanoBreathControllerUSBDriver.exe	da977b3f6ce90741
+2	216	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+10	420	7201717895685167	NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+10	420	7201717895685167	NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+10	420	7201717895685167	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+10	420	7201717895685167	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+424	567	7201717897136992	NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+424	567	7201717897136992	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+584	748	7201717898952723	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ba10ee7949a3ad34
+1	221	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+9	352	7201718046201116	NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+9	352	7201718046201116	NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+9	352	7201718046201116	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+9	352	7201718046201116	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+357	4525	7201718087879405	CMakeFiles/NanoBreathControllerUSBDriver.dir/driverwindow.cpp.obj	316e5278672e7ff0
+4526	4892	7201718091549436	NanoBreathControllerUSBDriver.exe	da977b3f6ce90741
+1	223	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+0	1692	0	CMakeFiles/generate_ts.util	a193340858785a9c
+1	233	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+0	91	0	CMakeFiles/generate_ts.util	a193340858785a9c
+1	213	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+0	84	0	CMakeFiles/generate_ts.util	a193340858785a9c
+1	269	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+1	1259	0	CMakeFiles/generate_qm.util	a7b752aeb1a83329
+1	278	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+22	388	7201719417521629	NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+22	388	7201719417521629	NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+22	388	7201719417521629	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+22	388	7201719417521629	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+392	532	7201719418958069	NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+392	532	7201719418958069	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp	2f39eda6d68ada6e
+548	716	7201719420799541	CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ba10ee7949a3ad34
+532	4735	7201719460936963	CMakeFiles/NanoBreathControllerUSBDriver.dir/driverwindow.cpp.obj	316e5278672e7ff0
+4735	5115	7201719464760156	NanoBreathControllerUSBDriver.exe	da977b3f6ce90741
+1	221	0	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/cmake.verify_globs	c853cd9eb1329e4e
+10	347	7201720697750587	NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+10	347	7201720697750587	NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+10	347	7201720697750587	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/timestamp	65eb320ccfc6953f
+10	347	7201720697750587	I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp	65eb320ccfc6953f
+352	4577	7201720739966718	CMakeFiles/NanoBreathControllerUSBDriver.dir/driverwindow.cpp.obj	316e5278672e7ff0
+4578	4971	7201720743955775	NanoBreathControllerUSBDriver.exe	da977b3f6ce90741

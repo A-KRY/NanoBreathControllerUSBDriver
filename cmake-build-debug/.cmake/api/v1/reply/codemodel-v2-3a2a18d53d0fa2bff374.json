@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-9425977b623ec5622ce3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "NanoBreathControllerUSBDriver",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "NanoBreathControllerUSBDriver::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NanoBreathControllerUSBDriver-Debug-16f61583c28c8870dd3e.json",
+					"name" : "NanoBreathControllerUSBDriver",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NanoBreathControllerUSBDriver_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NanoBreathControllerUSBDriver_autogen-Debug-ad4f4e802b95188969fd.json",
+					"name" : "NanoBreathControllerUSBDriver_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "NanoBreathControllerUSBDriver_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-NanoBreathControllerUSBDriver_autogen_timestamp_deps-Debug-4de21987d693963fe58b.json",
+					"name" : "NanoBreathControllerUSBDriver_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generate_qm::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generate_qm-Debug-77389a470b3bf8acc175.json",
+					"name" : "generate_qm",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generate_ts::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generate_ts-Debug-cf012e39d98261d4c41c.json",
+					"name" : "generate_ts",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug",
+		"source" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
