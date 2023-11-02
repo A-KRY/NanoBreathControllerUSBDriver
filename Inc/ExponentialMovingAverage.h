@@ -36,9 +36,9 @@ private:
 public:
     explicit ExponentialMovingAverage(double alpha = 1.0);
 
-    static double MinAlpha();
+    [[maybe_unused]] static double MinAlpha();
 
-    static double MaxAlpha();
+    [[maybe_unused]] static double MaxAlpha();
 
     /**
      * @brief   <p>设置 EMA 的 newAlpha 值</p>
@@ -65,7 +65,7 @@ public:
      * @author  A-KRY
      * @date    2023/10/22 19:24
      */
-    void reset();
+    [[maybe_unused]] void reset();
 
     /**
      * @brief   <p>重置所有参数</p>
@@ -73,7 +73,7 @@ public:
      * @author  A-KRY
      * @date    2023/10/22 19:26
      */
-    void resetAll();
+    [[maybe_unused]] void resetAll();
 };
 
 

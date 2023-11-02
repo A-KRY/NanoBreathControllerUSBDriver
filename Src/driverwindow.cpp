@@ -1,7 +1,5 @@
-#include "driverwindow.h"
+#include "../Inc/driverwindow.h"
 #include "./ui_driverwindow.h"
-
-#define INFO(TEXT) QMessageBox::information(this, "INFO", (TEXT), QMessageBox::Ok);
 
 // region #define Macro of smoothnessLineEdit_onEditFinished
 #define SMOOTHNESSLINEEDIT_ONEDITFINISHED const static QRegularExpression rx("\\d+%?"); \
@@ -51,7 +49,6 @@ DriverWindow::DriverWindow(QWidget *parent)
     connect(usbPortUpdateTimer, &QTimer::timeout, this, &DriverWindow::usbPortComboBox_updateAvailablePort);
     usbPortComboBox_updateAvailablePort();
     usbPortUpdateTimer->start();
-
     /*
      * midiChannelComboBox initialization
      * 初始化 midiChannelComboBox
@@ -96,7 +93,7 @@ DriverWindow::DriverWindow(QWidget *parent)
             serialPort->setPortName(ui->usbPortComboBox->currentText());
 
             if (serialPort->open(QIODevice::ReadWrite)) {
-                serialPort->setBaudRate(QSerialPort::Baud2400);
+                serialPort->setBaudRate(QSerialPort::Baud115200);
                 return;
             }
             else {
@@ -121,19 +118,22 @@ DriverWindow::DriverWindow(QWidget *parent)
      */
     auto serialPort_onDataReceived = [this]() {
         if (midiPort) {
-            static QByteArray data = serialPort->read(1);
-            static BYTE ccMessage[3], cpMessage[2];
-            if (!data.isEmpty()) {
-                if (currentMessageType == MidiMessageType::ControlChange) {
-                    ccMessage[0] = static_cast<int>(currentMessageType)|midiChannel;
-                    ccMessage[1] = static_cast<BYTE>(currentControlChange);
-                    ccMessage[2] = static_cast<BYTE>(EMA->filter(data[0]));
-                    virtualMIDISendData(midiPort, ccMessage, sizeof(ccMessage));
-                }
-                else if (currentMessageType == MidiMessageType::ChannelPressure) {
-                    cpMessage[0] = static_cast<int>(currentMessageType);
-                    cpMessage[1] = static_cast<BYTE>(EMA->filter(data[0]));
-                    virtualMIDISendData(midiPort, cpMessage, sizeof(cpMessage));
+            if (serialPort->bytesAvailable() > 0) {
+                QByteArray data = serialPort->read(1);
+                serialPort->clear();
+                BYTE ccMessage[3], cpMessage[2];
+                if (!data.isEmpty()) {
+                    if (currentMessageType == MidiMessageType::ControlChange) {
+                        ccMessage[0] = static_cast<int>(currentMessageType) | midiChannel;
+                        ccMessage[1] = static_cast<BYTE>(currentControlChange);
+                        ccMessage[2] = static_cast<BYTE>(EMA->filter(data[0]));
+                        virtualMIDISendData(midiPort, ccMessage, sizeof(ccMessage));
+                    }
+                    else if (currentMessageType == MidiMessageType::ChannelPressure) {
+                        cpMessage[0] = static_cast<int>(currentMessageType);
+                        cpMessage[1] = static_cast<BYTE>(EMA->filter(data[0]));
+                        virtualMIDISendData(midiPort, cpMessage, sizeof(cpMessage));
+                    }
                 }
             }
         }
@@ -156,7 +156,7 @@ DriverWindow::DriverWindow(QWidget *parent)
      * @date    2023/10/24 11:44
      */
     auto midiChannelComboBox_onActivated = [this](int index){
-            midiChannel = index;
+        midiChannel = index;
     };
     connect(ui->midiChannelComboBox, &QComboBox::activated,
             this, midiChannelComboBox_onActivated);
@@ -166,9 +166,6 @@ DriverWindow::DriverWindow(QWidget *parent)
      */
     auto ccComboBox_onActivated = [this](int index) {
         if (index == 0) {
-
-        }
-        else if (index == 1) {
             currentMessageType = MidiMessageType::ChannelPressure;
             currentControlChange = -1;
         }
@@ -176,6 +173,7 @@ DriverWindow::DriverWindow(QWidget *parent)
             currentMessageType = MidiMessageType::ControlChange;
             currentControlChange = getIdFromIndex(index);
         }
+        EMA->reset();
     };
     connect(ui->ccComboBox, &QComboBox::activated,
             this, ccComboBox_onActivated);
@@ -388,8 +386,6 @@ DriverWindow::DriverWindow(QWidget *parent)
                  * @author A-KRY
                  * @date 2023/10/25 10:04
                  */
-                [[maybe_unused]]auto READ_ME = nullptr;
-
                 SMOOTHNESSLINEEDIT_ONEDITFINISHED
                 return true;
             }
@@ -478,17 +474,38 @@ void DriverWindow::loadFromJson() {
  * @date 2023-10-26 16:08
  */
 #define VAL(KEY) jsonObject[KEY]
-
-
         currentLanguage = VAL(LANGUAGE).toString();
 
+// region usbPortComboBox
         ui->usbPortComboBox->setCurrentText(VAL(USB_PORT).toString());
+        if (ui->usbPortComboBox->currentText() != tr("(Not Connected)")) {
+            // Set port name and open port
+            // 设置端口名并打开端口
+            serialPort->setPortName(ui->usbPortComboBox->currentText());
+            if (serialPort->open(QIODevice::ReadWrite)) {
+                serialPort->setBaudRate(QSerialPort::Baud115200);
+            }
+            else {
+                QMessageBox::information(this, tr("Error"), tr("Serial port open failed."), QMessageBox::Ok);
+                ui->usbPortComboBox->setCurrentIndex(0);
+                serialPort->setPortName(tr("(Not Connected)"));
+            }
+        }
+//endregion
 
+// region midiChannelComboBox
         ui->midiChannelComboBox->setCurrentText(VAL(MIDI_CHANNEL).toString());
+        midiChannel = ui->midiChannelComboBox->currentIndex();
+//endregion
 
+// region ccComboBox
         ui->ccComboBox->setCurrentText(VAL(CC).toString());
+        currentControlChange = getIdFromIndex(ui->ccComboBox->currentIndex());
+//endregion
 
+// region smoothnessHorizontalSlider
         ui->smoothnessHorizontalSlider->setValue(VAL(SMOOTHNESS).toInt());
+//endregion
 
 #undef VAL
         settingFile.close();
@@ -508,10 +525,7 @@ void DriverWindow::usbPortComboBox_updateAvailablePort() {
     // If previous port still exists, set selected item to it,
     // otherwise set to 0 which corresponding "(Not Connected)"
     // 若之前的端口还存在，将其设为当前选项。否则设为 0 即 "(Not Connected)"
-    auto index = ui->usbPortComboBox->findText(previousText);
-    ui->usbPortComboBox->setCurrentIndex(
-            index == -1 ? 0 : index
-    );
+    ui->usbPortComboBox->setCurrentText(previousText);
 }
 
 void DriverWindow::closeEvent(QCloseEvent *event) {
@@ -553,6 +567,10 @@ void DriverWindow::setTrayMenu(QMenu *menu) {
 void DriverWindow::setCurrentLanguage(const QString &language) {
     DriverWindow::currentLanguage = language;
 }
+
+//
+// Getters
+//
 
 int DriverWindow::getIdFromIndex(int index) {
     if (index < 1 or index > 118) {

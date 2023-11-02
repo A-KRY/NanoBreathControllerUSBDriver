@@ -13,6 +13,7 @@
 #include <QMouseEvent>
 #include <QSystemTrayIcon>
 #include <QMenu>
+#include <QMutex>
 #include "ExponentialMovingAverage.h"
 #include "NanoEventFilter.h"
 
@@ -23,6 +24,17 @@ QT_END_NAMESPACE
 class DriverWindow : public QWidget
 {
     Q_OBJECT
+public:
+    /**
+      * @brief    <br><p>statusByte 的高四位</p>
+      * <p>The upper four bits of statusByte.</p>
+      * @author  A-KRY
+      * @date    2023/10/27 10:36
+      */
+    enum class MidiMessageType {
+        ControlChange = 0xB0,
+        ChannelPressure = 0xD0,
+    };
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -82,17 +94,6 @@ protected:
       * @date    2023/10/26 15:45
       */
      QString currentLanguage;
-
-     /**
-      * @brief    <br><p>statusByte 的高四位</p>
-      * <p>The upper four bits of statusByte.</p>
-      * @author  A-KRY
-      * @date    2023/10/27 10:36
-      */
-     enum class MidiMessageType {
-         ControlChange = 0xB0,
-         ChannelPressure = 0xD0,
-     };
 
      /**
       * @brief   <br><p>当前的 MIDI 消息类型</p>

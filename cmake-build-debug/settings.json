@@ -1,7 +1,7 @@
 {
-    "CC": "1  Modulation Wheel",
+    "CC": "Channel Pressure",
     "MIDI Channel": "1",
     "Smoothness": 50,
-    "USB Port": "(Not Connected)",
-    "language": "English"
+    "USB Port": "（未连接）",
+    "language": "简体中文"
 }

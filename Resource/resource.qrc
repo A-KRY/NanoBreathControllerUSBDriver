@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>SystemTrayIcon.png</file>
+    </qresource>
+    <qresource prefix="/languages"/>
+    <qresource prefix="/data"/>
+    <qresource prefix="/dat">
+        <file>cc_index_to_text.json</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>Translations/en_US.qm</file>
+        <file>Translations/ja_JP.qm</file>
+        <file>Translations/zh_CN.qm</file>
+    </qresource>
+    <qresource prefix="/translations"/>
+</RCC>

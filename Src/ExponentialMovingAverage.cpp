@@ -2,7 +2,7 @@
 // Created by Admin on 2023/10/22.
 //
 
-#include "ExponentialMovingAverage.h"
+#include "../Inc/ExponentialMovingAverage.h"
 
 // Constants
 const double ExponentialMovingAverage::minAlpha = 0.1, ExponentialMovingAverage::maxAlpha = 1.0;
@@ -31,19 +31,19 @@ double ExponentialMovingAverage::filter(double rawValue) {
     return ema;
 }
 
-void ExponentialMovingAverage::reset() {
+[[maybe_unused]] void ExponentialMovingAverage::reset() {
     isReset = true;
 }
 
-void ExponentialMovingAverage::resetAll() {
+[[maybe_unused]] void ExponentialMovingAverage::resetAll() {
     alpha = 1.0;
     isReset = true;
 }
 
-double ExponentialMovingAverage::MinAlpha() {
+[[maybe_unused]] double ExponentialMovingAverage::MinAlpha() {
     return minAlpha;
 }
 
-double ExponentialMovingAverage::MaxAlpha() {
+[[maybe_unused]] double ExponentialMovingAverage::MaxAlpha() {
     return maxAlpha;
 }

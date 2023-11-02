@@ -1,11 +1,9 @@
 // clazy:excludeall=lambda-in-connect
-#include "driverwindow.h"
+#include "../Inc/driverwindow.h"
 
 #include <QApplication>
 #include <QTranslator>
 #include <QActionGroup>
-
-#define INFO(TEXT) QMessageBox::information(nullptr, "INFO", (TEXT), QMessageBox::Ok);
 
 int main(int argc, char *argv[])
 {
@@ -71,7 +69,7 @@ int main(int argc, char *argv[])
     auto ACTION(LAN_SGN) = new QAction(#MENU_TEXT); \
     TRAY_MENU->addAction(ACTION(LAN_SGN)); \
     QObject::connect(ACTION(LAN_SGN), &QAction::triggered, &APP, [&](){ \
-        if (TRANSLATOR and TRANSLATOR->load(":languages/"#LAN_SGN)) { \
+        if (TRANSLATOR and TRANSLATOR->load(":Translations/"#LAN_SGN)) { \
             QApplication::installTranslator(TRANSLATOR); \
             WINDOW.setCurrentLanguage(ACTION(LAN_SGN)->text()); \
             WINDOW.reloadText(); \
@@ -110,7 +108,7 @@ int main(int argc, char *argv[])
      */
     auto exitAction = new QAction(QObject::tr("Exit"));
     trayMenu->addAction(exitAction);
-    QObject::connect(exitAction, &QAction::triggered, &application, &QApplication::quit);
+    QObject::connect(exitAction, &QAction::triggered, &application, &QApplication::exit);
 
     driverWindow.setTrayMenu(trayMenu);
 

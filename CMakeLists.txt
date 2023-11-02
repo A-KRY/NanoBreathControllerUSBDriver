@@ -6,6 +6,8 @@ project(NanoBreathControllerUSBDriver VERSION 0.1 LANGUAGES CXX)
 # Replace with your vulkan.h path.
 set(Vulkan_INCLUDE_DIR  "I:\\Qt\\6.6.0\\Src\\qtwebengine\\src\\3rdparty\\chromium\\third_party\\vulkan-deps\\vulkan-headers\\src\\include\\vulkan")
 
+set(CMAKE_PREFIX_PATH  "I:\\Qt\\6.6.0\\mingw_64\\lib\\cmake")
+
 # 改为您 teVirtualMIDISDK 的路径
 # Replace with your teVirtualMIDISDK path.
 set(teVirtualMIDISDK_DIR "C:/Program Files (x86)/Tobias Erichsen/teVirtualMIDISDK/C-Binding")
@@ -21,36 +23,34 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
 
 set(GEN_TS_FILES
-        zh_CN.ts
-        en_US.ts
-        ja_JP.ts
+        Resource/Translations/zh_CN.ts
+        Resource/Translations/en_US.ts
+        Resource/Translations/ja_JP.ts
 )
 
 set(GEN_QM_FILES
-        zh_CN.qm
-        en_US.qm
-        ja_JP.qm
+        Resource/Translations/zh_CN.qm
+        Resource/Translations/en_US.qm
+        Resource/Translations/ja_JP.qm
 )
 
 set(TS_FILES
-        zh_CN.ts
-        en_US.ts
-        ja_JP.ts
+        ${GEN_TS_FILES}
 )
 
 include_directories(${teVirtualMIDISDK_DIR})
 
 set(PROJECT_SOURCES
-        main.cpp
-        driverwindow.cpp
-        driverwindow.h
-        driverwindow.ui
-        ExponentialMovingAverage.cpp
-        ExponentialMovingAverage.h
-        ExponentialMovingAverage.h
-        NanoEventFilter.cpp
-        NanoEventFilter.h
-        NanoEventFilter.h
+        Src/main.cpp
+        Src/driverwindow.cpp
+        Inc/driverwindow.h
+        Src/driverwindow.ui
+        Src/ExponentialMovingAverage.cpp
+        Inc/ExponentialMovingAverage.h
+        Inc/ExponentialMovingAverage.h
+        Src/NanoEventFilter.cpp
+        Inc/NanoEventFilter.h
+        Inc/NanoEventFilter.h
 )
 
 # 定义要生成的TS文件的目标名称
@@ -77,7 +77,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         ${TS_FILES}
-        resource.qrc
+        Resource/resource.qrc
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET NanoBreathControllerUSBDriver APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

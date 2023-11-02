@@ -302,7 +302,7 @@
 		"I:/Qt/6.6.0/mingw_64/lib/cmake/Qt6SerialPort/Qt6SerialPortAdditionalTargetInfo.cmake",
 		"I:/Qt/6.6.0/mingw_64/lib/cmake/Qt6SerialPort/Qt6SerialPortVersionlessTargets.cmake",
 		"H:/Program Files/JetBrains/CLion 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/GNUInstallDirs.cmake",
-		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/resource.qrc"
+		"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Resource/resource.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver",
 	"DEP_FILE" : "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/deps",
@@ -310,21 +310,21 @@
 	"HEADERS" : 
 	[
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/ExponentialMovingAverage.h",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverage.h",
 			"MU",
-			"EWIEGA46WW/moc_ExponentialMovingAverage.cpp",
+			"C2K46SIDN7/moc_ExponentialMovingAverage.cpp",
 			null
 		],
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/NanoEventFilter.h",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/NanoEventFilter.h",
 			"MU",
-			"EWIEGA46WW/moc_NanoEventFilter.cpp",
+			"C2K46SIDN7/moc_NanoEventFilter.cpp",
 			null
 		],
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/driverwindow.h",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/driverwindow.h",
 			"MU",
-			"EWIEGA46WW/moc_driverwindow.cpp",
+			"C2K46SIDN7/moc_driverwindow.cpp",
 			null
 		]
 	],
@@ -402,22 +402,22 @@
 	"SOURCES" : 
 	[
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/ExponentialMovingAverage.cpp",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverage.cpp",
 			"MU",
 			null
 		],
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/NanoEventFilter.cpp",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/NanoEventFilter.cpp",
 			"MU",
 			null
 		],
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/driverwindow.cpp",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/driverwindow.cpp",
 			"MU",
 			null
 		],
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/main.cpp",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/main.cpp",
 			"MU",
 			null
 		]

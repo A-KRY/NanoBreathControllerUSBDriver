@@ -33,23 +33,24 @@ NanoBreathControllerUSBDriver_autogen/timestamp: \
   H:/Program\ Files/JetBrains/CLion\ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows.cmake \
   H:/Program\ Files/JetBrains/CLion\ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake \
   I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/CMakeLists.txt \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/ExponentialMovingAverage.cpp \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/ExponentialMovingAverage.h \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/NanoEventFilter.cpp \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/NanoEventFilter.h \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverage.h \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/NanoEventFilter.h \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/driverwindow.h \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Resource/resource.qrc \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverage.cpp \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/NanoEventFilter.cpp \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/driverwindow.cpp \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/main.cpp \
   CMakeFiles/3.26.4/CMakeCXXCompiler.cmake \
   CMakeFiles/3.26.4/CMakeRCCompiler.cmake \
   CMakeFiles/3.26.4/CMakeSystem.cmake \
   NanoBreathControllerUSBDriver_autogen/moc_predefs.h \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/driverwindow.cpp \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/driverwindow.h \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/main.cpp \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/resource.qrc \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QEvent \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QFile \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QJsonDocument \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QJsonObject \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QList \
+  I:/Qt/6.6.0/mingw_64/include/QtCore/QMutex \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QObject \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QRect \
   I:/Qt/6.6.0/mingw_64/include/QtCore/QSize \
@@ -91,7 +92,9 @@ NanoBreathControllerUSBDriver_autogen/timestamp: \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qdarwinhelpers.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qdatastream.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qdatetime.h \
+  I:/Qt/6.6.0/mingw_64/include/QtCore/qdeadlinetimer.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qdebug.h \
+  I:/Qt/6.6.0/mingw_64/include/QtCore/qelapsedtimer.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qendian.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qexceptionhandling.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qfile.h \
@@ -125,6 +128,7 @@ NanoBreathControllerUSBDriver_autogen/timestamp: \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qmetacontainer.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qmetatype.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qminmax.h \
+  I:/Qt/6.6.0/mingw_64/include/QtCore/qmutex.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qnamespace.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qnativeinterface.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qnumeric.h \
@@ -175,6 +179,7 @@ NanoBreathControllerUSBDriver_autogen/timestamp: \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qtnoop.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qtpreprocessorsupport.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qtresource.h \
+  I:/Qt/6.6.0/mingw_64/include/QtCore/qtsan_impl.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qttranslation.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qttypetraits.h \
   I:/Qt/6.6.0/mingw_64/include/QtCore/qtversion.h \
@@ -871,5 +876,5 @@ NanoBreathControllerUSBDriver_autogen/timestamp: \
   I:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wow64apiset.h \
   I:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wtypes.h \
   I:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wtypesbase.h \
-  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/driverwindow.ui \
+  I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/driverwindow.ui \
   H:/Program\ Files/JetBrains/CLion\ 2023.2.1/bin/cmake/win/x64/bin/cmake.exe

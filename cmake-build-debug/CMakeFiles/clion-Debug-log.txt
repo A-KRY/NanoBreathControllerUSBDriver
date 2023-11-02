@@ -1,4 +1,4 @@
 "H:\Program Files\JetBrains\CLion 2023.2.1\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=H:/Program Files/JetBrains/CLion 2023.2.1/bin/ninja/win/x64/ninja.exe" -G Ninja -S "I:\Projects\Qt\NanoBreathController USB Driver\NanoBreathControllerUSBDriver" -B "I:\Projects\Qt\NanoBreathController USB Driver\NanoBreathControllerUSBDriver\cmake-build-debug"
--- Configuring done (0.9s)
+-- Configuring done (1.1s)
 -- Generating done (0.0s)
 -- Build files have been written to: I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug
