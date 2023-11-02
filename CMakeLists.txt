@@ -6,8 +6,6 @@ project(NanoBreathControllerUSBDriver VERSION 0.1 LANGUAGES CXX)
 # Replace with your vulkan.h path.
 set(Vulkan_INCLUDE_DIR  "I:\\Qt\\6.6.0\\Src\\qtwebengine\\src\\3rdparty\\chromium\\third_party\\vulkan-deps\\vulkan-headers\\src\\include\\vulkan")
 
-set(CMAKE_PREFIX_PATH  "I:\\Qt\\6.6.0\\mingw_64\\lib\\cmake")
-
 # 改为您 teVirtualMIDISDK 的路径
 # Replace with your teVirtualMIDISDK path.
 set(teVirtualMIDISDK_DIR "C:/Program Files (x86)/Tobias Erichsen/teVirtualMIDISDK/C-Binding")
@@ -45,9 +43,9 @@ set(PROJECT_SOURCES
         Src/driverwindow.cpp
         Inc/driverwindow.h
         Src/driverwindow.ui
-        Src/ExponentialMovingAverage.cpp
-        Inc/ExponentialMovingAverage.h
-        Inc/ExponentialMovingAverage.h
+        Src/ExponentialMovingAverageFilter.cpp
+        Inc/ExponentialMovingAverageFilter.h
+        Inc/ExponentialMovingAverageFilter.h
         Src/NanoEventFilter.cpp
         Inc/NanoEventFilter.h
         Inc/NanoEventFilter.h

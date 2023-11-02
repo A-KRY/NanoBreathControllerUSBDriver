@@ -45,7 +45,7 @@ cmake_ninja_workdir = I$:/Projects/Qt/NanoBreathController$ USB$ Driver/NanoBrea
 # Utility command for generate_ts
 
 build CMakeFiles/generate_ts.util: CUSTOM_COMMAND
-  COMMAND = cmd.exe /C "cd /D "I:\Projects\Qt\NanoBreathController USB Driver\NanoBreathControllerUSBDriver" && lupdate Src/main.cpp Src/driverwindow.cpp Inc/driverwindow.h Src/driverwindow.ui Src/ExponentialMovingAverage.cpp Inc/ExponentialMovingAverage.h Inc/ExponentialMovingAverage.h Src/NanoEventFilter.cpp Inc/NanoEventFilter.h Inc/NanoEventFilter.h -ts Resource/Translations/zh_CN.ts Resource/Translations/en_US.ts Resource/Translations/ja_JP.ts"
+  COMMAND = cmd.exe /C "cd /D "I:\Projects\Qt\NanoBreathController USB Driver\NanoBreathControllerUSBDriver" && lupdate Src/main.cpp Src/driverwindow.cpp Inc/driverwindow.h Src/driverwindow.ui Src/ExponentialMovingAverageFilter.cpp Inc/ExponentialMovingAverageFilter.h Inc/ExponentialMovingAverageFilter.h Src/NanoEventFilter.cpp Inc/NanoEventFilter.h Inc/NanoEventFilter.h -ts Resource/Translations/zh_CN.ts Resource/Translations/en_US.ts Resource/Translations/ja_JP.ts"
   DESC = Running utility command for generate_ts
   restat = 1
 
@@ -95,9 +95,9 @@ build CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/driverwindow.cpp.obj: CXX
   OBJECT_DIR = CMakeFiles\NanoBreathControllerUSBDriver.dir
   OBJECT_FILE_DIR = CMakeFiles\NanoBreathControllerUSBDriver.dir\Src
 
-build CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/ExponentialMovingAverage.cpp.obj: CXX_COMPILER__NanoBreathControllerUSBDriver_unscanned_Debug I$:/Projects/Qt/NanoBreathController$ USB$ Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverage.cpp || cmake_object_order_depends_target_NanoBreathControllerUSBDriver
+build CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/ExponentialMovingAverageFilter.cpp.obj: CXX_COMPILER__NanoBreathControllerUSBDriver_unscanned_Debug I$:/Projects/Qt/NanoBreathController$ USB$ Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverageFilter.cpp || cmake_object_order_depends_target_NanoBreathControllerUSBDriver
   DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_SERIALPORT_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
-  DEP_FILE = CMakeFiles\NanoBreathControllerUSBDriver.dir\Src\ExponentialMovingAverage.cpp.obj.d
+  DEP_FILE = CMakeFiles\NanoBreathControllerUSBDriver.dir\Src\ExponentialMovingAverageFilter.cpp.obj.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
   INCLUDES = -I"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/include" -I"C:/Program Files (x86)/Tobias Erichsen/teVirtualMIDISDK/C-Binding" -isystem I:/Qt/6.6.0/mingw_64/include/QtCore -isystem I:/Qt/6.6.0/mingw_64/include -isystem I:/Qt/6.6.0/mingw_64/mkspecs/win32-g++ -isystem I:/Qt/6.6.0/mingw_64/include/QtWidgets -isystem I:/Qt/6.6.0/mingw_64/include/QtGui -isystem I:/Qt/6.6.0/Src/qtwebengine/src/3rdparty/chromium/third_party/vulkan-deps/vulkan-headers/src/include/vulkan -isystem I:/Qt/6.6.0/mingw_64/include/QtSerialPort
   OBJECT_DIR = CMakeFiles\NanoBreathControllerUSBDriver.dir
@@ -127,7 +127,7 @@ build CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver
 #############################################
 # Link the executable NanoBreathControllerUSBDriver.exe
 
-build NanoBreathControllerUSBDriver.exe: CXX_EXECUTABLE_LINKER__NanoBreathControllerUSBDriver_Debug CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/main.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/driverwindow.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/ExponentialMovingAverage.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/NanoEventFilter.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/SJ56Y4VZUD/qrc_resource.cpp.obj | I$:/Qt/6.6.0/mingw_64/lib/libQt6Widgets.a I$:/Qt/6.6.0/mingw_64/lib/libQt6SerialPort.a C$:/Program$ Files$ (x86)/Tobias$ Erichsen/teVirtualMIDISDK/C-Binding/teVirtualMIDI64.lib I$:/Qt/6.6.0/mingw_64/lib/libQt6Gui.a I$:/Qt/6.6.0/mingw_64/lib/libQt6Core.a I$:/Qt/6.6.0/mingw_64/lib/libQt6EntryPoint.a || NanoBreathControllerUSBDriver_autogen NanoBreathControllerUSBDriver_autogen_timestamp_deps
+build NanoBreathControllerUSBDriver.exe: CXX_EXECUTABLE_LINKER__NanoBreathControllerUSBDriver_Debug CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/main.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/driverwindow.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/ExponentialMovingAverageFilter.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/Src/NanoEventFilter.cpp.obj CMakeFiles/NanoBreathControllerUSBDriver.dir/NanoBreathControllerUSBDriver_autogen/SJ56Y4VZUD/qrc_resource.cpp.obj | I$:/Qt/6.6.0/mingw_64/lib/libQt6Widgets.a I$:/Qt/6.6.0/mingw_64/lib/libQt6SerialPort.a C$:/Program$ Files$ (x86)/Tobias$ Erichsen/teVirtualMIDISDK/C-Binding/teVirtualMIDI64.lib I$:/Qt/6.6.0/mingw_64/lib/libQt6Gui.a I$:/Qt/6.6.0/mingw_64/lib/libQt6Core.a I$:/Qt/6.6.0/mingw_64/lib/libQt6EntryPoint.a || NanoBreathControllerUSBDriver_autogen NanoBreathControllerUSBDriver_autogen_timestamp_deps
   FLAGS = -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = I:/Qt/6.6.0/mingw_64/lib/libQt6Widgets.a  I:/Qt/6.6.0/mingw_64/lib/libQt6SerialPort.a  "C:/Program Files (x86)/Tobias Erichsen/teVirtualMIDISDK/C-Binding/teVirtualMIDI64.lib"  I:/Qt/6.6.0/mingw_64/lib/libQt6Gui.a  -ld3d11  -ldxgi  -ldxguid  -ld3d12  I:/Qt/6.6.0/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  I:/Qt/6.6.0/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

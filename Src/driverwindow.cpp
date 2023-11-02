@@ -26,7 +26,7 @@ DriverWindow::DriverWindow(QWidget *parent)
     , usbPortUpdateTimer(new QTimer(this))
     , midiChannel(0)
     , serialPort(new QSerialPort())
-    , EMA(new ExponentialMovingAverage(0.5))
+    , smoothFilter()
     , trayMenu(nullptr)
     , currentLanguage("English")
     , currentMessageType(MidiMessageType::ControlChange)
@@ -119,19 +119,22 @@ DriverWindow::DriverWindow(QWidget *parent)
     auto serialPort_onDataReceived = [this]() {
         if (midiPort) {
             if (serialPort->bytesAvailable() > 0) {
-                QByteArray data = serialPort->read(1);
+                static QByteArray buffer;
+                static BYTE value;
+                static BYTE ccMessage[3], cpMessage[2];
+                buffer = serialPort->read(1);
                 serialPort->clear();
-                BYTE ccMessage[3], cpMessage[2];
-                if (!data.isEmpty()) {
+                if (not buffer.isEmpty()) {
+                    value = static_cast<BYTE>(smoothFilter[1].next(smoothFilter[0].next(buffer[0])));
                     if (currentMessageType == MidiMessageType::ControlChange) {
-                        ccMessage[0] = static_cast<int>(currentMessageType) | midiChannel;
+                        ccMessage[0] = static_cast<BYTE>(currentMessageType) | midiChannel;
                         ccMessage[1] = static_cast<BYTE>(currentControlChange);
-                        ccMessage[2] = static_cast<BYTE>(EMA->filter(data[0]));
+                        ccMessage[2] = value;
                         virtualMIDISendData(midiPort, ccMessage, sizeof(ccMessage));
                     }
                     else if (currentMessageType == MidiMessageType::ChannelPressure) {
                         cpMessage[0] = static_cast<int>(currentMessageType);
-                        cpMessage[1] = static_cast<BYTE>(EMA->filter(data[0]));
+                        cpMessage[1] = value;
                         virtualMIDISendData(midiPort, cpMessage, sizeof(cpMessage));
                     }
                 }
@@ -173,7 +176,8 @@ DriverWindow::DriverWindow(QWidget *parent)
             currentMessageType = MidiMessageType::ControlChange;
             currentControlChange = getIdFromIndex(index);
         }
-        EMA->reset();
+        smoothFilter[0].reset();
+        smoothFilter[1].reset();
     };
     connect(ui->ccComboBox, &QComboBox::activated,
             this, ccComboBox_onActivated);
@@ -210,19 +214,21 @@ DriverWindow::DriverWindow(QWidget *parent)
     ui->smoothnessHorizontalSlider->installEventFilter(smoothnessHorizontalSlider_CtrlLeftClickFilter);
 
     /**
-     * @brief    <br><p>滑块移动时更新 EMA 滤波器的 <b><i>alpha</i></b> 值</p>
-     * <p>Update <b><i>alpha</i></b> of EMA filter when slider moves.</p>
+     * @brief    <br><p>滑块移动时更新 smoothFilter 滤波器的 <b><i>alpha</i></b> 值</p>
+     * <p>Update <b><i>alpha</i></b> of smoothFilter next when slider moves.</p>
      * @param   value <p>移动后的值</p>
      * <p>New value after moved.</p>
      * @author  A-KRY
      * @date    2023/10/24 11:51
      */
     auto smoothnessHorizontalSlider_onValueChanged = [this](int value){
-        // alpha = (ExponentialMovingAverage::MaxAlpha() - ExponentialMovingAverage::MinAlpha())
+        // alpha = (ExponentialMovingAverageFilter::MaxAlpha() - ExponentialMovingAverageFilter::MinAlpha())
         // * ( 1 - static_cast<double>(value) / (ui->smoothnessHorizontalSlider->maximum()-ui->smoothnessHorizontalSlider->minimum()))
-        // + ExponentialMovingAverage::MinAlpha();
+        // + ExponentialMovingAverageFilter::MinAlpha();
         // Now is 0.9*(1-value/100)+0.1
-        EMA->setAlpha(1-0.009*value);
+        auto newAlpha = 1 - 0.009 * value;
+        smoothFilter[0].setAlpha(newAlpha);
+        smoothFilter[1].setAlpha(newAlpha);
 
         // 让 smoothnessLineEdit 显示数值
         // Let smoothnessLineEdit display value
@@ -359,7 +365,7 @@ DriverWindow::DriverWindow(QWidget *parent)
 
     connect(ui->smoothnessLineEdit, &QLineEdit::editingFinished, this, smoothnessLineEdit_onEditFinished);
 
-    // Event filter which triggers when click outside smoothnessLineEdit
+    // Event next which triggers when click outside smoothnessLineEdit
     auto smoothnessLineEdit_ClickOutsideFilter_callback = [this](NEF_PARAMS) {
         if (event->type() == QEvent::MouseButtonPress) {
             if (ui->smoothnessLineEdit->hasFocus() and !ui->smoothnessLineEdit->rect().contains(ui->smoothnessLineEdit->mapFromGlobal(QCursor::pos()))) {

@@ -33,11 +33,11 @@ NanoBreathControllerUSBDriver_autogen/timestamp: \
 	H:/Program\ Files/JetBrains/CLion\ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/Windows.cmake \
 	H:/Program\ Files/JetBrains/CLion\ 2023.2.1/bin/cmake/win/x64/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/CMakeLists.txt \
-	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverage.h \
+	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverageFilter.h \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/NanoEventFilter.h \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Inc/driverwindow.h \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Resource/resource.qrc \
-	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverage.cpp \
+	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverageFilter.cpp \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/NanoEventFilter.cpp \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/driverwindow.cpp \
 	I:/Projects/Qt/NanoBreathController\ USB\ Driver/NanoBreathControllerUSBDriver/Src/main.cpp \

@@ -310,9 +310,9 @@
 	"HEADERS" : 
 	[
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverage.h",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverageFilter.h",
 			"MU",
-			"C2K46SIDN7/moc_ExponentialMovingAverage.cpp",
+			"C2K46SIDN7/moc_ExponentialMovingAverageFilter.cpp",
 			null
 		],
 		[
@@ -402,7 +402,7 @@
 	"SOURCES" : 
 	[
 		[
-			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverage.cpp",
+			"I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverageFilter.cpp",
 			"MU",
 			null
 		],

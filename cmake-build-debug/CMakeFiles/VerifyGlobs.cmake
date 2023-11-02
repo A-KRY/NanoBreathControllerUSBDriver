@@ -51,11 +51,13 @@ endif()
 # _directory_contents at I:/Qt/6.6.0/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:55 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/*.cpp")
 set(OLD_GLOB
-  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverage.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/ExponentialMovingAverageFilter.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/NanoEventFilter.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/driverwindow.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Src/main.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_EmaInterface.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_ExponentialMovingAverageFilter.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_NanoEventFilter.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_driverwindow.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/SJ56Y4VZUD/qrc_resource.cpp"
@@ -82,7 +84,7 @@ endif()
 # _directory_contents at I:/Qt/6.6.0/mingw_64/lib/cmake/Qt6LinguistTools/Qt6LinguistToolsMacros.cmake:55 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/*.h")
 set(OLD_GLOB
-  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverage.h"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/ExponentialMovingAverageFilter.h"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/NanoEventFilter.h"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/driverwindow.h"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/include/ui_driverwindow.h"

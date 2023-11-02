@@ -14,7 +14,7 @@
 #include <QSystemTrayIcon>
 #include <QMenu>
 #include <QMutex>
-#include "ExponentialMovingAverage.h"
+#include "ExponentialMovingAverageFilter.h"
 #include "NanoEventFilter.h"
 
 QT_BEGIN_NAMESPACE
@@ -72,12 +72,12 @@ protected:
     QSerialPort* serialPort;
 
     /**
-     * @brief    <br><p>指数移动平均滤波器</p>
-     * <p>EMA Filter</p>
+     * @brief    <br><p>平滑滤波器</p>
+     * <p>Smooth Filter</p>
      * @author  A-KRY
      * @date    2023/10/23 9:05
      */
-    std::unique_ptr<ExponentialMovingAverage> EMA;
+    ExponentialMovingAverageFilter smoothFilter[2];
 
     /**
      * @brief    <br><p>系统托盘菜单</p>
