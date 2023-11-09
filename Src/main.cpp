@@ -40,10 +40,7 @@ int main(int argc, char *argv[])
     // Multi language
 
 // region MULTI_LANG_DEFINE
-#ifdef TRAY_MENU
-#ifdef TRANSLATOR
-#ifdef APP
-#ifdef WINDOW
+#if defined(TRAY_MENU) && defined(TRANSLATOR) && defined(APP) && defined(WINDOW)
 #define MULTI_LANG_SET_UP() auto languageActionGroup = new QActionGroup(nullptr);
 #define ACTION(LAN_SGN) switch_to_##LAN_SGN##_action
 /**
@@ -79,13 +76,11 @@ int main(int argc, char *argv[])
     ACTION(LAN_SGN)->setCheckable(true);  \
     ACTION(LAN_SGN)->setActionGroup(languageActionGroup); \
 
-#endif // WINDOW
-#endif // APP
-#endif // TRANSLATOR
-#endif // TRAY_MENU
+#endif
 // endregion
 
     MULTI_LANG_SET_UP()
+    // Add a new language here
     ADD_LANG(en_US, English)
     ADD_LANG(zh_CN, 简体中文)
     ADD_LANG(ja_JP, 日本語)

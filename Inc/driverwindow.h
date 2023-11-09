@@ -13,7 +13,6 @@
 #include <QMouseEvent>
 #include <QSystemTrayIcon>
 #include <QMenu>
-#include <QMutex>
 #include "ExponentialMovingAverageFilter.h"
 #include "NanoEventFilter.h"
 

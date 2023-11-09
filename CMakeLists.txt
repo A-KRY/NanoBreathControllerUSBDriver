@@ -4,7 +4,7 @@ project(NanoBreathControllerUSBDriver VERSION 0.1 LANGUAGES CXX)
 
 # 改为您 vulkan.h 的路径
 # Replace with your vulkan.h path.
-set(Vulkan_INCLUDE_DIR  "I:\\Qt\\6.6.0\\Src\\qtwebengine\\src\\3rdparty\\chromium\\third_party\\vulkan-deps\\vulkan-headers\\src\\include\\vulkan")
+set(Vulkan_INCLUDE_DIR  "I:/Qt/6.6.0/Src/qtwebengine/src/3rdparty/chromium/third_party/vulkan-deps/vulkan-headers/src/include/vulkan")
 
 # 改为您 teVirtualMIDISDK 的路径
 # Replace with your teVirtualMIDISDK path.
@@ -32,9 +32,9 @@ set(GEN_QM_FILES
         Resource/Translations/ja_JP.qm
 )
 
-set(TS_FILES
-        ${GEN_TS_FILES}
-)
+# 添加 .ts 文件时注释掉这个 set 语句
+# Comment out this set statement when adding a .ts file
+set(TS_FILES ${GEN_TS_FILES})
 
 include_directories(${teVirtualMIDISDK_DIR})
 

@@ -1,10 +1,11 @@
 #include "../Inc/driverwindow.h"
 #include "./ui_driverwindow.h"
 
-// region #define Macro of smoothnessLineEdit_onEditFinished
+// region Content of macro of smoothnessLineEdit_onEditFinished
 #define SMOOTHNESSLINEEDIT_ONEDITFINISHED const static QRegularExpression rx("\\d+%?"); \
     auto match = rx.match(ui->smoothnessLineEdit->text()); \
-    if (match.hasMatch() and match.captured(0) == ui->smoothnessLineEdit->text())  { \
+    if (match.hasMatch() and match.captured(0) == ui->smoothnessLineEdit->text())  {    \
+        /* It's okay whether there is a % or not. */                         \
         auto inputVal = ui->smoothnessLineEdit->text().back() == '%' \
                         ?   ui->smoothnessLineEdit->text().removeLast().toInt() \
                         :   ui->smoothnessLineEdit->text().toInt(); \
