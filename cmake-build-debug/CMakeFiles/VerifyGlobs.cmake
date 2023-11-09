@@ -62,6 +62,12 @@ set(OLD_GLOB
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_driverwindow.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/SJ56Y4VZUD/qrc_resource.cpp"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_ExponentialMovingAverageFilter.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_NanoEventFilter.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/C2K46SIDN7/moc_driverwindow.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/SJ56Y4VZUD/qrc_resource.cpp"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/mocs_compilation.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
@@ -89,6 +95,8 @@ set(OLD_GLOB
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/Inc/driverwindow.h"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/include/ui_driverwindow.h"
   "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-debug/NanoBreathControllerUSBDriver_autogen/moc_predefs.h"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/include/ui_driverwindow.h"
+  "I:/Projects/Qt/NanoBreathController USB Driver/NanoBreathControllerUSBDriver/cmake-build-release/NanoBreathControllerUSBDriver_autogen/moc_predefs.h"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

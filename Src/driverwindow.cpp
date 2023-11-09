@@ -93,6 +93,10 @@ DriverWindow::DriverWindow(QWidget *parent)
             serialPort->setPortName(ui->usbPortComboBox->currentText());
 
             if (serialPort->open(QIODevice::ReadWrite)) {
+                /**
+                 * @attention <p>切记波特率要与下位机匹配！</p>
+                 * <p>Remember to match the baud rate with the lower computer!</p>
+                 */
                 serialPort->setBaudRate(QSerialPort::Baud115200);
                 return;
             }
